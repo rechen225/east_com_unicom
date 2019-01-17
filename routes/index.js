@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var crypto = require('crypto')
 let wechat=require(('../server/wechat'))
+let wechat_web=require('../server/wechat_web')
 let wechat_msg=require('../server/wechat_msg')
 let east_api=require('../server/east_api')
 
@@ -61,7 +62,9 @@ router.get('/register',(req,res,next)=>{
 		res.redirect(`https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx30ea4459f5e78bef&redirect_uri=${url}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`)
 		return
 	}else{
-		wechat.get_web_token(wechat_code,(body)=>{
+
+
+		wechat_web.get_web_token(wechat_code,(body)=>{
 			let tel_times=new Date(new Date().setDate(new Date().getDate()+30))
 			res.cookie('openid',body.openid,{expires:tel_times,httpOnly:true})
 			if(req.query.url && req.query.url!="newuser"){

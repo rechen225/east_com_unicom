@@ -1,0 +1,17 @@
+extends layout
+
+block content
+	article#rosterlist
+		h5 号码拦截管理
+		section
+			h6
+			div
+				ul
+					li.btn(onclick="location.href='/setting/roster?type=-1'")
+						p
+							label 黑名单管理
+						a.select-more.iconfont(href='/setting/roster?type=-1') &#xe654;
+					li.btn(onclick="location.href='/setting/roster?type=1'")
+						p
+							label 白名单管理
+						a.select-more.iconfont(href='/setting/roster?type=1') &#xe654;

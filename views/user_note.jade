@@ -1,0 +1,124 @@
+extends layout
+
+block content
+	article#note(v-cloak,style="background:#F7F7F7;")
+		.common-banner.report-list-banner
+		.note-list-box
+			h5.note-title 已为您拦截{{note_list.length}}次电话
+			section
+				ul
+					li.border-top.btn
+						p
+							label 拦截后通知
+							aside.btn(@click='open_notice',v-bind:class="[is_notice?'open':'']")
+									span
+			ul.note-list
+				li(v-for="obj in note_list")
+					p
+						span {{obj.interceptNumber}}
+						label {{obj.tag}}
+					p
+						b {{obj.interceptTime}}
+						a.iconfont.btn(@click="move_roster(obj,1)",style="margin-right:.15rem;") 
+							span 添加到白名单
+						a.iconfont.btn(v-bind:href="'tel:'+obj.interceptNumber")
+							span 回拨
+		.alert-layer(v-if='is_add')
+			.alert-add.l-alert.alert-roster
+				if(type==1)
+					h4 输入想接的电话
+				if(type==-1)
+					h4 输入不想接的电话
+				ul
+					li
+						label 固话
+						a.choose(v-bind:class="[add_obj.type==1?'choose-c':'']",@click='add_obj.type=1')
+							i
+						.alert-rose-input(v-bind:style="{'border-color':add_obj.type==1?'#008DE6':''}")
+							input.m-txt(placeholder='区号',type='text',v-model='add_obj.tel1',@focus="add_obj.type=1")
+							b.text-line —
+							input.l-txt(placeholder="电话号码",type='text',v-model='add_obj.tel2',@focus="add_obj.type=1")
+
+					li
+						label 手机
+						a.choose(v-bind:class="[add_obj.type==2?'choose-c':'']",@click='add_obj.type=2')
+							i
+						.alert-rose-input(v-bind:style="{'border-color':add_obj.type==2?'#008DE6':''}")
+							input.xl-txt(placeholder="11位手机号码",type='text',v-model='add_obj.tel3',@focus="add_obj.type=2")
+					li
+						label 其他
+						a.choose(v-bind:class="[add_obj.type==3?'choose-c':'']",@click='add_obj.type=3')
+							i
+						.alert-rose-input(v-bind:style="{'border-color':add_obj.type==3?'#008DE6':''}")
+							input.xl-txt(placeholder="其他格式号码",type='text',v-model='add_obj.tel4',@focus="add_obj.type=3")
+				//br
+				//ul
+					li
+						label 备注
+						input.xxl-txt(placeholder="请输入备注内容,如电话销售",type='text',v-model='add_obj.remark')
+				.alert-button
+					button(@click="is_add=false") 取消
+					button(@click='add_roster()') 添加				
+
+	//article#note(v-cloak)
+		h5 已为您拦截{{note_list.length}}次电话
+			//a
+		div.table
+			ul.roster-list
+				li(v-for="obj in note_list")
+					h4
+						label {{obj.interceptNumber}}&nbsp;
+						span {{obj.interceptTime}}
+					h3
+						label{{obj.tag}}
+						a.iconfont.btn(@click="move_roster(obj,-1)") 
+							span 添加到黑名单
+						a.iconfont.btn(@click="move_roster(obj,1)") 
+							span 添加到白名单
+						a.iconfont.btn(v-bind:href="'tel:'+obj.interceptNumber")
+							span 回拨
+
+		section
+			ul
+				li.border-top.btn
+					p
+						label 拦截后通知
+						aside.btn(@click='open_notice',v-bind:class="[is_notice?'open':'']")
+								span
+		.alert-layer(v-if='is_add')
+			.alert-add.l-alert.alert-roster
+				if(type==1)
+					h4 输入想接的电话
+				if(type==-1)
+					h4 输入不想接的电话
+				ul
+					li
+						label 固话
+						a.choose(v-bind:class="[add_obj.type==1?'choose-c':'']",@click='add_obj.type=1')
+							i
+						.alert-rose-input(v-bind:style="{'border-color':add_obj.type==1?'#008DE6':''}")
+							input.m-txt(placeholder='区号',type='text',v-model='add_obj.tel1',@focus="add_obj.type=1")
+							b.text-line —
+							input.l-txt(placeholder="电话号码",type='text',v-model='add_obj.tel2',@focus="add_obj.type=1")
+
+					li
+						label 手机
+						a.choose(v-bind:class="[add_obj.type==2?'choose-c':'']",@click='add_obj.type=2')
+							i
+						.alert-rose-input(v-bind:style="{'border-color':add_obj.type==2?'#008DE6':''}")
+							input.xl-txt(placeholder="11位手机号码",type='text',v-model='add_obj.tel3',@focus="add_obj.type=2")
+					li
+						label 其他
+						a.choose(v-bind:class="[add_obj.type==3?'choose-c':'']",@click='add_obj.type=3')
+							i
+						.alert-rose-input(v-bind:style="{'border-color':add_obj.type==3?'#008DE6':''}")
+							input.xl-txt(placeholder="其他格式号码",type='text',v-model='add_obj.tel4',@focus="add_obj.type=3")
+				//br
+				//ul
+					li
+						label 备注
+						input.xxl-txt(placeholder="请输入备注内容,如电话销售",type='text',v-model='add_obj.remark')
+				.alert-button
+					button(@click="is_add=false") 取消
+					button(@click='add_roster()') 添加
+	script(src='/js/note.js?v=#{_v}')

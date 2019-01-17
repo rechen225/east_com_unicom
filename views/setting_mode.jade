@@ -1,0 +1,25 @@
+extends layout
+
+block content
+	article#mode(v-cloak)
+		h5 拦截模式
+		.form
+			p
+				span.left
+					a.choose(v-bind:class="[type==1?'choose-c':'']",@click='type=1')
+						i
+					b.left 智能模式(包括拦截种类，号段，时间)
+			p
+				span.left
+					a.choose(v-bind:class="[type==2?'choose-c':'']",@click='type=2')
+						i
+					b.left 仅拦截黑民单
+			p
+				span.left
+					a.choose(v-bind:class="[type==3?'choose-c':'']",@click='type=3')
+						i
+					b.left 仅接受白名单					
+			div
+				button(@click='change_mode') 确定修改
+	script(src='/js/mode.js?v=#{_v}')
+				

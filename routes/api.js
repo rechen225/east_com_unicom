@@ -16,12 +16,12 @@ router.post('/register',(req,res,next)=>{
 	let token=req.body.token
 	let openid=req.cookies['openid']
 
-	if(req.cookies['unicom_test']){
-		east_api.login(name,codes,res,(success)=>{
-			res.json({success:success})
-		},req)
-		return
-	}
+	// if(req.cookies['unicom_test']){
+	// 	east_api.login(name,codes,res,(success)=>{
+	// 		res.json({success:success})
+	// 	},req)
+	// 	return
+	// }
 
 	auth.decrypt(token,'hmAAAeastBBBcomCCCsmscode',(str)=>{
 		console.log(str+' == '+code)

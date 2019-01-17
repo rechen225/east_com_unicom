@@ -31,31 +31,34 @@ router.get('/register',(req,res,next)=>{
 		return
 	}
 
-	if(req.query.unicom){
-		let tel_times=new Date(new Date().setDate(new Date().getDate()+30))
-		res.cookie('openid','test123',{expires:tel_times,httpOnly:true})
-		res.cookie('unicom_test','1',{expires:tel_times,httpOnly:true})
-		if(req.query.url){
-			east_api.wxlogin('test123',req,(success)=>{
-				if(success){
-					res.redirect(req.query.url)
-				}else{
-					res.render('register',{title:'用户绑定',url:req.query.url})
-				}
-			})
-			return
-		}
-		res.render('register',{title:'用户绑定',url:req.query.url})
-		return;
-	}
+	// if(req.query.unicom){
+	// 	let tel_times=new Date(new Date().setDate(new Date().getDate()+30))
+	// 	res.cookie('openid','test123',{expires:tel_times,httpOnly:true})
+	// 	res.cookie('unicom_test','1',{expires:tel_times,httpOnly:true})
+	// 	if(req.query.url){
+	// 		east_api.wxlogin('test123',req,(success)=>{
+	// 			if(success){
+	// 				res.redirect(req.query.url)
+	// 			}else{
+	// 				res.render('register',{title:'用户绑定',url:req.query.url})
+	// 			}
+	// 		})
+	// 		return
+	// 	}
+	// 	res.render('register',{title:'用户绑定',url:req.query.url})
+	// 	return;
+	// }
 
 	if(!wechat_code){
 		if(!req.query.url){
 			req.query.url="newuser"
 		}
-		let url=encodeURIComponent('http://fsr.calltrace.cn/register?url='+req.query.url)
+		//let url=encodeURIComponent('http://fsr.calltrace.cn/register?url='+req.query.url)
+		let url=encodeURIComponent('http://eastcom.123zou.com/register?url='+req.query.url)
 		//http%3a%2f%2ffsr.calltrace.cn%2fusers%2f
-		res.redirect(`https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxed14cc095edc34e0&redirect_uri=${url}&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect`)
+		//北京联通：wx30ea4459f5e78bef
+		//信通院：wxed14cc095edc34e0
+		res.redirect(`https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx30ea4459f5e78bef&redirect_uri=${url}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`)
 		return
 	}else{
 		wechat.get_web_token(wechat_code,(body)=>{

@@ -46,10 +46,10 @@ app.use((req,res,next)=>{
 app.use((req,res,next)=>{
   let url=req.url.toLowerCase();
   console.log(req.headers.host)
-  if(req.headers.host.indexOf('eastcom.123zou.com')>-1){
-    let tel_times=new Date(new Date().setDate(new Date().getDate()+30))
-    res.cookie('unicom_test','1',{expires:tel_times,httpOnly:true})
-  }
+  // if(req.headers.host.indexOf('eastcom.123zou.com')>-1){
+  //   let tel_times=new Date(new Date().setDate(new Date().getDate()+30))
+  //   res.cookie('unicom_test','1',{expires:tel_times,httpOnly:true})
+  // }
   if(url.indexOf('/setting')==0 || url.indexOf('/report')==0 || url.indexOf('/users')==0){
     let tel=req.cookies['t']
     //let password=req.cookies['p']

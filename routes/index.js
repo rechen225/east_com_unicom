@@ -15,6 +15,7 @@ router.get('/register',(req,res,next)=>{
 	
 
 	let wechat_code=req.query.code
+	console.log('微信code:'+wechat_code)
 	if(req.query.testbs){
 		let tel_times=new Date(new Date().setDate(new Date().getDate()+30))
 		res.cookie('openid','oy84s1FY0bf1k0gk2bEBbWuAbpqM',{expires:tel_times,httpOnly:true})

@@ -150,6 +150,7 @@ router.post('/test_notice',(req,res,next)=>{
 		wechat_web.send_notice({
 			openid:'oa6gdwF1-uXeqrSr0LU1MA-5HxJ0',
 			number:'13221040450',
+			date:new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate()+' '+new Date().getHours()+':'+new Date().getMinutes(),
 			content:'房产推销',
 			remark:'点击查看详情',
 			url:'http://fsr.calltrace.cn/users/note'

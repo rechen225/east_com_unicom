@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 let wechat=require('../server/wechat')
-let wechat_web=require('../server/wechat')
+let wechat_web=require('../server/wechat_web')
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {

@@ -147,7 +147,8 @@ router.post('/wechat',(req,res,next)=>{
 router.post('/test_notice',(req,res,next)=>{
 	console.log(req.body)
 	if(req.body.pwd=="hm_zxw_eastcom"){
-		wechat.send_notice({
+		wechat_web.send_notice({
+			openid:'oa6gdwF1-uXeqrSr0LU1MA-5HxJ0',
 			number:'13221040450',
 			content:'房产推销',
 			remark:'点击查看详情',

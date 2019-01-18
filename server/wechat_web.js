@@ -136,14 +136,13 @@ function notice(data,callback){
 		let date=new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate()+' '+new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds()
 		let obj={
 			"touser":openid,
-			"template_id":"gkyuaUsstSmTqXuhF18NfN-4PI9mxqXpPPvjXDpq3QI",
+			"template_id":"5SxFLXdHEuhV6QeUJg8sbm_iBITv_yvWpSHxhp0_sVI",
 			"url":data.url,
 			"topcolor":"#FF0000",
 			"data":{
 				first:{value:'骚扰电话拦截',color:'#333'},
-				keyword1:{value:data.date,color:'#333'},
-				keyword2:{value:data.number,color:'#E30'},
-				keyword3:{value:data.content,color:'#333'},
+				keynote1:{value:data.date,color:'#333'},
+				keynote2:{value:data.content+" "+data.number,color:'#E30'},
 				remark:{value:data.remark,color:'#333'}
 			}
 		}
@@ -163,6 +162,8 @@ function notice(data,callback){
 }
 
 function boss_note(data,callback){
+	callback({success:false})
+	return
 	let openid=data.openid
 	get_token((token)=>{
 

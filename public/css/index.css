@@ -254,7 +254,7 @@ section ul li .slider-input[type="text"]{width:.4rem;background:#F5F5F5;margin-r
 
 
 /********** register ***********/
-.reg-banner{background:url(/img/register/banner.png) no-repeat center/3.75rem;height:2.3rem;}
+.reg-banner{background:url(/img/register/banner.jpg) no-repeat center/3.75rem;height:2.3rem;}
 .reg-box{width:3.15rem;height:2.25rem;margin:0 auto;-webkit-transform:translateY(-.6rem);background:#FFF;box-shadow:#AAA .0rem .0rem .1rem;
   border-radius:.03rem;box-sizing:border-box;padding-top:.25rem;}
 .reg-box p{position:relative;}

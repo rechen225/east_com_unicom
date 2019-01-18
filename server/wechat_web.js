@@ -171,16 +171,16 @@ function boss_note(data,callback){
 		let date=new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate()+' '+new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds()
 		let obj={
 			"touser":openid,
-			"template_id":"PjXBrZn7VQgJ5Q5g44wp5AuO4ZW4EJlE4Y-ACX2OuYc",
+			"template_id":"1ITtJ5Mnbhxe-0KiCPrP21N4NI1Dvcn2uIjcpmUYyPM",
 			"url":data.url,
 			"topcolor":"#FF0000",
 			"data":{
 				first:{value:'订阅成功提醒',color:'#333'},
 				type:{value:'防骚扰服务订阅',color:'#333'},
-				date:{value:date,color:'#333'},
-				tel:{value:data.number,color:'#E30'},
-				time:{value:date,color:'#333'},
-				//remark:{value:data.remark,color:'#333'}
+				keyword1:{value:date,color:'#333'},
+				keyword3:{value:data.number,color:'#E30'},
+				keyword2:{value:(date.getFullYear()+1)+(date.getMonth()+1)+date.getDate(),color:'#333'},
+				remark:{value:'',color:'#333'}
 			}
 		}
 		post(url,obj,(body)=>{

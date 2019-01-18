@@ -2,6 +2,7 @@ let request=require('request')
 let config=require('../config.json')
 let postTime=new Date()
 let wechat=require('./wechat')
+let wechat_web=require('./wechat_web')
 
 function boss_timer(){
 	console.log('正在检查订阅状况')
@@ -35,7 +36,7 @@ function boss_timer(){
 					remark:'感谢'
 				}
 				console.log(data)
-				wechat.boss_note(data,(body)=>{
+				wechat_web.boss_note(data,(body)=>{
 					
 				})
 			}
@@ -87,7 +88,7 @@ function timer(){
 					remark:'点击查看详情'
 				}
 				console.log(data)
-				wechat.send_notice(data,(body)=>{
+				wechat_web.send_notice(data,(body)=>{
 
 				})
 			}

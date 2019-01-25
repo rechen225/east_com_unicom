@@ -2,7 +2,7 @@ var vapp=new Vue({
 	el:'#type',
 	data:{
 		is_open:false,
-		is_show_list:false,
+		is_show_list:true,
 		winheight:__remheight,
 		winwidth:__width,
 		type_list:[

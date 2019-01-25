@@ -63,8 +63,6 @@ router.get('/register',(req,res,next)=>{
 		res.redirect(`https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx30ea4459f5e78bef&redirect_uri=${url}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`)
 		return
 	}else{
-
-
 		wechat_web.get_web_token(wechat_code,(body)=>{
 			let tel_times=new Date(new Date().setDate(new Date().getDate()+30))
 			res.cookie('openid',body.openid,{expires:tel_times,httpOnly:true})
@@ -82,6 +80,10 @@ router.get('/register',(req,res,next)=>{
 		})
 		//res.render('register',{title:'用户绑定',url:req.query.url})
 	}
+})
+
+router.get('/unicom',(req,res,next)=>{
+	res.render('unicom',{})
 })
 
 router.get('/build',(req,res,next)=>{
@@ -145,7 +147,6 @@ router.post('/wechat',(req,res,next)=>{
 })
 
 router.post('/test_notice',(req,res,next)=>{
-	console.log(req.body)
 	if(req.body.pwd=="hm_zxw_eastcom"){
 		wechat_web.send_notice({
 			openid:'oa6gdwF1-uXeqrSr0LU1MA-5HxJ0',

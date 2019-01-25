@@ -2,7 +2,7 @@ extends layout
 
 block content
 	article#roster(v-cloak,style="background-color:#F7F7F7;")
-		.rose-banner(v-bind:class="[type==1?'rose-w':'']")
+		.rose-banner.unicom-banner(v-bind:class="[type==1?'rose-w':'']") {{type==1?'白名单设置':'黑名单设置'}}
 		.rose-table
 			ul
 				li(v-for="obj in roster_list")
@@ -23,7 +23,7 @@ block content
 						label 固话
 						a.choose(v-bind:class="[add_obj.type==1?'choose-c':'']",@click='add_obj.type=1')
 							i
-						.alert-rose-input(v-bind:style="{'border-color':add_obj.type==1?'#008DE6':''}")
+						.alert-rose-input(v-bind:style="{'border-color':add_obj.type==1?'#d70010':''}")
 							input.m-txt(placeholder='区号',type='text',v-model='add_obj.tel1',@focus="add_obj.type=1")
 							b.text-line —
 							input.l-txt(placeholder="电话号码",type='text',v-model='add_obj.tel2',@focus="add_obj.type=1")
@@ -32,13 +32,13 @@ block content
 						label 手机
 						a.choose(v-bind:class="[add_obj.type==2?'choose-c':'']",@click='add_obj.type=2')
 							i
-						.alert-rose-input(v-bind:style="{'border-color':add_obj.type==2?'#008DE6':''}")
+						.alert-rose-input(v-bind:style="{'border-color':add_obj.type==2?'#d70010':''}")
 							input.xl-txt(placeholder="11位手机号码",type='text',v-model='add_obj.tel3',@focus="add_obj.type=2")
 					li
 						label 其他
 						a.choose(v-bind:class="[add_obj.type==3?'choose-c':'']",@click='add_obj.type=3')
 							i
-						.alert-rose-input(v-bind:style="{'border-color':add_obj.type==3?'#008DE6':''}")
+						.alert-rose-input(v-bind:style="{'border-color':add_obj.type==3?'#d70010':''}")
 							input.xl-txt(placeholder="其他格式号码",type='text',v-model='add_obj.tel4',@focus="add_obj.type=3")
 				//br
 				//ul

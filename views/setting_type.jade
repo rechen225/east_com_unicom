@@ -9,7 +9,7 @@ block content
 			//.shield.shield2
 			//.shield.shield3
 		//.type-btn-list(v-bind:style="{'-webkit-transform':is_show_list?'translateY('+((__height*.01)/__size-9.3)+'rem) translateX(-1.875rem)':''}")
-		.type-btn-list(v-bind:style="{'-webkit-transform':is_show_list?'translateY(0rem) translateX(-1.875rem)':''}")
+		.type-btn-list(v-bind:style="{'-webkit-transform':is_show_list?'translateY(0rem) translateX(-1.875rem)':''}",style='top:1rem;position:relative;')
 			div.close-box
 				//a.close-btn(v-if="!is_show_list",@click="is_show_list=!is_show_list")
 				//a.open-btn(v-if="is_show_list",@click="is_show_list=!is_show_list")

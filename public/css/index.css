@@ -170,7 +170,7 @@ section ul li .slider-input[type="text"]{width:.4rem;background:#F5F5F5;margin-r
 
 
 /**********type new**********/
-#type{overflow:auto;}
+#type{overflow-y:auto;overflow-x:hidden;}
 .type-open-box{width:3.75rem;height:4rem;background:url(/img/type/bg.jpg) no-repeat 0 -.15rem/3.75rem;position:relative;}
 .type-open-box>*{position: absolute;}
 .type-open-box .btn{width:1.5rem;height:.4rem;top:2.6rem;-webkit-transform:translateX(-50%);left:50%;

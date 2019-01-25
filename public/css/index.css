@@ -306,14 +306,15 @@ article{height:100%;}
 .note-list-box .note-list li p span{color:#d70010!important;}
 
 .unicom-menu .banner{background: url(/img/unicom/banner.jpg) center/3.75rem 1.8rem no-repeat;width:100%;height:1.8rem;}
-.unicom-menu  .list{margin-top:.3rem;}
+.unicom-menu  .list{margin-top:.3rem;height:1.7rem;}
 .unicom-menu  .list li{float:left;width:1.65rem;height:.7rem;margin:0 0 .2rem .15rem;}
 .unicom-menu  .list li a{background:center/1.65rem .7rem no-repeat;float:left;width:1.65rem;height:.7rem;}
 .unicom-menu  .list ul li:first-child a{background-image:url(/img/unicom/setting.png);}
 .unicom-menu  .list ul li:nth-child(2) a{background-image:url(/img/unicom/roser.png);}
 .unicom-menu  .list ul li:nth-child(3) a{background-image:url(/img/unicom/roser2.png);}
 .unicom-menu  .list ul li:nth-child(4) a{background-image:url(/img/unicom/users.png);}
-.unicom-menu .txt{margin:.15rem;}
+.unicom-menu .txt{margin:.15rem;border-top:dashed 1px #CCC;padding-top:.2rem;}
+.unicom-menu .txt *{color: #777;}
 
 .unicom-banner{width:3.75rem;height:1rem;background:url(/img/unicom/banner_style.jpg) no-repeat center/3.75rem;font-size:.25rem;line-height:1rem;
   text-indent:2rem;color:#333;font-weight:400;}

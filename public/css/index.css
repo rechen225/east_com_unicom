@@ -180,6 +180,9 @@ section ul li .slider-input[type="text"]{width:.4rem;background:#F5F5F5;margin-r
 .type-open-box .shield{top:.7rem;width:.7rem;height:1.15rem;left:1.35rem;background:url(/img/type/shield1.png) no-repeat center/.7rem;}
 .type-open-box .shield2{left:1.54rem;top:.6rem;background-image: url(/img/type/shield2.png);}
 .type-open-box .shield3{left:1.73rem;top:.5rem;background-image: url(/img/type/shield3.png);}
+
+.type-open-box>a{line-height:1.5rem;text-align:center;width:100%;font-size:.2rem;}
+
 .type-open-box-active .light{-webkit-animation:lightShake 5s linear infinite;}
 .type-open-box-active .shield{-webkit-animation:floatNow 2s linear infinite;}
 .type-open-box-active .shield2{-webkit-animation:floatNow 2s .5s linear infinite;}
@@ -206,8 +209,12 @@ section ul li .slider-input[type="text"]{width:.4rem;background:#F5F5F5;margin-r
   border-top-left-radius:3.75rem;border-top-right-radius:3.75rem;box-sizing:border-box;padding:0 1.875rem;overflow:visible;}
 .type-btn-list>*{}  
 
-.type-btn-list ul{width:3.75rem;height:4rem;margin-top:.475rem;}
-.type-btn-list ul li{float:left;width:33%;margin-bottom:.4rem;position:relative;}
+.type-btn-list ul{width:3.75rem;height:3.75rem;margin-top:.275rem;}
+.type-btn-list ul li{float:left;width:33%;margin-top:.4rem;position:relative;}
+.type-btn-list ul li:first-child{margin-top:0;}
+.type-btn-list ul li:nth-child(2){margin-top:0;}
+.type-btn-list ul li:nth-child(3){margin-top:0;}
+
 .type-btn-list ul li>*{display:block;margin:0 auto;text-align: center;}
 .type-btn-list ul li>span{width:.55rem;height:.55rem;background-color:rgba(0,0,0,0);margin-bottom:.15rem;position:relative;outline: none;
   background:no-repeat center/.55rem .55rem;cursor:pointer;border: none;box-shadow:none;}
@@ -298,7 +305,7 @@ article{height:100%;}
 .note-list-box .note-list li p a{float:right;}
 .note-list-box .note-list li p span{color:#d70010!important;}
 
-.unicom-menu .banner{background: url(/img/unicom/banner.png) center/3.75rem 1.8rem no-repeat;width:100%;height:1.8rem;}
+.unicom-menu .banner{background: url(/img/unicom/banner.jpg) center/3.75rem 1.8rem no-repeat;width:100%;height:1.8rem;}
 .unicom-menu  .list{margin-top:.3rem;}
 .unicom-menu  .list li{float:left;width:1.65rem;height:.7rem;margin:0 0 .2rem .15rem;}
 .unicom-menu  .list li a{background:center/1.65rem .7rem no-repeat;float:left;width:1.65rem;height:.7rem;}
@@ -306,6 +313,7 @@ article{height:100%;}
 .unicom-menu  .list ul li:nth-child(2) a{background-image:url(/img/unicom/roser.png);}
 .unicom-menu  .list ul li:nth-child(3) a{background-image:url(/img/unicom/roser2.png);}
 .unicom-menu  .list ul li:nth-child(4) a{background-image:url(/img/unicom/users.png);}
+.unicom-menu .txt{margin:.15rem;}
 
 .unicom-banner{width:3.75rem;height:1rem;background:url(/img/unicom/banner_style.jpg) no-repeat center/3.75rem;font-size:.25rem;line-height:1rem;
   text-indent:2rem;color:#333;font-weight:400;}

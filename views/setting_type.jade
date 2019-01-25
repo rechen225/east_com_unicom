@@ -3,6 +3,7 @@ extends layout
 block content
 	article#type(v-cloak,v-bind:style="{height:('100%'),overflow:winwidth>500?'auto':''}")
 		.type-open-box(v-bind:class="[!is_open?'':'type-open-box-active']")
+			a 来电管家
 			//button.btn(@click="change_type_all()") 一键{{is_open?'关闭':'开启'}}防骚扰
 			//.light(v-if="is_open")
 			//.shield

@@ -123,7 +123,12 @@ function get(url,callback,errcallback){
 		if (!err && res.statusCode == 200) {
 	        callback(JSON.parse(body))
 	    }else{
-	    	errcallback(err)
+
+	    		console.log('[ '+url+' ]接口调用失败')
+	    		console.log(res.statusCode)
+	    	if(errcallback){
+	    		errcallback(err)
+	    	}
 	    }
 	})
 }

@@ -90,6 +90,9 @@ router.get('/build',(req,res,next)=>{
 	res.render('build',{})
 })
 
+router.get('/about',(req,res,next)=>{
+	res.render('about',{})
+})
 
 router.get('/wechat',(req,res,next)=>{
 	var token="eastcom_hm";

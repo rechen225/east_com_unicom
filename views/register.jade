@@ -41,7 +41,7 @@ block content
 				label &nbsp;
 				input.checkbox(type="checkbox",@click="isagreen=!isagreen")
 				span 同意
-					a(style="color:#00CD66")《服务条款》
+					a(style="color:#00CD66",href='/about')《服务条款》
 			div
 				button(@click='register',v-bind:style="{background:isagreen?'':'#DDD'}") 绑定手机
 			input#backurl(type="hidden",value='#{url}')

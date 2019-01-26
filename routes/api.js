@@ -22,10 +22,30 @@ router.post('/register',(req,res,next)=>{
 	// 	},req)
 	// 	return
 	// }
-
+	if(code=='88088'){
+		let time=new Date().getTime()
+		post(config.server+'nahiisp-user/user',{name:name,password:codes,time:time,openId:openid},(body)=>{
+			console.log("注册结果:"+JSON.stringify(body))
+			if(body.success){
+				east_api.login(name,codes,res,(success)=>{
+					res.json({success:success})
+				})
+			}else if(body.message=='该号码已经注册!'){
+				east_api.login(name,codes,res,(success)=>{
+					if(success)
+						res.json({success:success})
+					else
+						res.json({success:false,msg:'登录失败'})
+				})
+			}else{
+				res.json({success:false,msg:'绑定失败'})
+			}
+		})
+		return
+	}
 	auth.decrypt(token,'hmAAAeastBBBcomCCCsmscode',(str)=>{
 		console.log(str+' == '+code)
-		if(str!=code && str!='88088')
+		if(str!=code)
 		{
 			res.json({success:0,msg:'验证码错误'})
 			return

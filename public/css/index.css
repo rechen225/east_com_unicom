@@ -315,7 +315,9 @@ article{height:100%;}
 .unicom-menu  .list ul li:nth-child(4) a{background-image:url(/img/unicom/users.png);}
 .unicom-menu .txt{margin:.15rem;border-top:dashed 1px #CCC;padding-top:.2rem;}
 .unicom-menu .txt *{color: #777;}
-
+.unicom-menu .txt h4{text-align: center;color:#AAA;height:.5rem;position:relative;line-height:.3rem;cursor:pointer;}
+.unicom-menu .txt h4 i{position:absolute;bottom:0;left:50%;-webkit-transform:translate(-50%,0) scaleY(-1);background:url(/img/type/top.png) no-repeat center/.3rem;width:.3rem;height:.3rem;}
+.unicom-menu .txt .unicom-show i{-webkit-transform:translate(-50%,0) scaleY(1);}
 .unicom-banner{width:3.75rem;height:1rem;background:url(/img/unicom/banner_style.jpg) no-repeat center/3.75rem;font-size:.25rem;line-height:1rem;
   text-indent:2rem;color:#333;font-weight:400;}
 

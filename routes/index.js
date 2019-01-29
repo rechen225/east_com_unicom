@@ -161,10 +161,24 @@ router.post('/test_notice',(req,res,next)=>{
 		},(body)=>{
 			res.json(body)
 		})
+	}else if(req.body.pwd=='hm_zxw_unicom'){
+		wechat_web.boss_notice({
+			openid:'oa6gdwF1-uXeqrSr0LU1MA-5HxJ0',
+			number:'13221040450',
+			date:new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate()+' '+new Date().getHours()+':'+new Date().getMinutes(),
+			content:'房产推销',
+			remark:'点击查看详情',
+			url:''
+		},(body)=>{
+			res.json(body)
+		})
 	}else{
 		res.json({success:false})
 	}
+	
 })
+
+
 
 
 router.post('/wechat_menu',(req,res,next)=>{

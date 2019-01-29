@@ -150,6 +150,7 @@ router.post('/wechat',(req,res,next)=>{
 })
 
 router.post('/test_notice',(req,res,next)=>{
+	console.log(req.body.pwd);
 	if(req.body.pwd=="hm_zxw_eastcom"){
 		wechat_web.send_notice({
 			openid:'oa6gdwF1-uXeqrSr0LU1MA-5HxJ0',

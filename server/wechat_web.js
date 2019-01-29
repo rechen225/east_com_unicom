@@ -162,8 +162,6 @@ function notice(data,callback){
 }
 
 function boss_note(data,callback){
-	callback({success:false})
-	return
 	let openid=data.openid
 	get_token((token)=>{
 

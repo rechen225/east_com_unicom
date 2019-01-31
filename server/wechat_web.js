@@ -177,7 +177,7 @@ function boss_note(data,callback){
 				type:{value:'防骚扰服务订阅',color:'#333'},
 				keyword1:{value:date,color:'#333'},
 				keyword3:{value:data.number,color:'#E30'},
-				keyword2:{value:date,color:'#333'},
+				keyword2:{value:'无',color:'#333'},
 				remark:{value:'',color:'#333'}
 			}
 		}

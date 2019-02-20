@@ -18,7 +18,7 @@ html
 	#export_dom(v-cloak)
 		.alert-layer(v-if='is_confirm || is_alert || is_alert_min' v-bind:style='{background:is_alert_min?"rgba(0,0,0,0)":""}')
 			.alert-confirm.m-alert(v-if='is_confirm')
-				p {{alert_txt}}
+				p(v-bind:style="{'text-align':is_left?'left':'center'}") {{alert_txt}}
 				div
 					button(@click='confirm_btn()') 确定
 					button.gray-bg(@click='cancel_btn()')  取消
@@ -40,17 +40,23 @@ html
 				is_alert:false,
 				is_alert_min:false,
 				is_confirm:false,
+				is_left:false,
 				alert_txt:'',
 				confirm_obj:undefined,
 				confirm_func:undefined,
 				cancel_func:undefined
 			},
 			methods:{
-				confirm:function(txt,obj,ok,cancel){
+				confirm:function(txt,obj,ok,cancel,isleft){
 					this.is_confirm=true;
 					this.alert_txt=txt;
 					this.confirm_func=ok;
 					this.cancel_func=cancel;
+					if(isleft){
+						this.is_left=true
+					}else{
+						this.is_left=false
+					}
 				},
 				confirm_btn:function(){
 					this.is_confirm=false;

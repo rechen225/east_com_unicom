@@ -9,6 +9,32 @@ router.get('/', function(req, res, next) {
 	let openid=req.cookies['openid']
 	let code=req.query.code
 
+	console.log('???')
+	if(req.query.testbs){
+		let body={ 
+			subscribe: 1,
+			openid: 'oa6gdwF1-uXeqrSr0LU1MA-5HxJ0',
+			nickname: 'ᕕ(ᐛ)ᕗ变身!',
+			sex: 1,
+			language: 'zh_CN',
+			city: '杭州',
+			province: '浙江',
+			country: '中国',
+			headimgurl: 'http://thirdwx.qlogo.cn/mmopen/LoEqBhgzXSPrP7pHrGor5anZRcBP0mlX0WYGFMqCacNsicQESibw6LcA06icGsFuep8CM8TD4TslA0oPfguOL83xb91bicQPw3Uz/132',
+			subscribe_time: 1547442154,
+			remark: '',
+			groupid: 0,
+			tagid_list: [],
+			subscribe_scene: 'ADD_SCENE_PROFILE_CARD',
+			qr_scene: 0,
+			qr_scene_str: '' 
+		}
+		res.render('user_index',{title:'我的信息',tel:tel,wechat:body})
+		return
+	}
+
+
+
 	if(!openid && !code){
 		res.redirect('https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx30ea4459f5e78bef&redirect_uri=http%3a%2f%2ffsr.calltrace.cn%2fusers%2f&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect')
 		return
@@ -22,6 +48,9 @@ router.get('/', function(req, res, next) {
 		})
 		
 	}else{
+
+
+
 		wechat_web.get_user(openid,(body)=>{
 			let tel_times=new Date(new Date().setDate(new Date().getDate()+30))
 			res.cookie('openid',body.openid,{expires:tel_times,httpOnly:true})

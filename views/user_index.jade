@@ -50,6 +50,7 @@ block content
 					li
 						p
 							label 订阅服务
+						span(style='position: absolute;right: .7rem;line-height:.45rem;') {{get_time_str()}}
 						aside.btn(@click="open_func()",v-bind:class="[is_open?'open':'']")
 							span
 

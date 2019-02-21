@@ -97,8 +97,6 @@ var vapp=new Vue({
 						clearInterval(timeTotal);
 					}
 				}
-
-				
 			}
 		},
 		get_time_str:function(){

@@ -8,7 +8,7 @@ function boss_timer(){
 	console.log('正在检查订阅状况')
 	let url=config.server+'nahiisp-subscribnote/subscribNote'
 	get(url,(body)=>{
-		console.log(JSON.stringify(body))
+		//console.log(JSON.stringify(body))
 		reget()
 		let msgTime={}
 		let openid_list=[]
@@ -21,7 +21,7 @@ function boss_timer(){
 			}else{
 				msgTime[obj.openId].time++
 			}
-			postTime=new Date(obj.createTime)
+			//postTime=new Date(obj.createTime)
 		}
 
 		if(openid_list.length>0){
@@ -35,7 +35,7 @@ function boss_timer(){
 					//content:obj.type==0?'黑名单':obj.tag,
 					remark:'感谢'
 				}
-				console.log(data)
+				//console.log(data)
 				wechat_web.boss_note(data,(body)=>{
 					
 				})
@@ -87,7 +87,7 @@ function timer(){
 					content:obj.type==0?'黑名单':obj.tag,
 					remark:'点击查看详情'
 				}
-				console.log(data)
+				//console.log(data)
 				wechat_web.send_notice(data,(body)=>{
 
 				})

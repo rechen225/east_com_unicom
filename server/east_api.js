@@ -37,10 +37,12 @@ let register=(tel,pwd,callback)=>{
 
 
 let wxlogin=(openid,res,callback)=>{
+	console.log('wechat user eastcom login..')
 	let url='/nahiisp-user/number?openId='+openid
 	let pwd="ECKoWMEJqqjCUoqh9VVTowMWNlyyywLBR7HM"
 	get(config.server+url,(body)=>{
 		//callback(body)
+		console.log('login success')
 		if(body.success && body.result.result.number){
 			let tel=body.result.result.number
 			post(config.server+'nahiisp-user/login',{j_username:tel,j_password:pwd},(body)=>{

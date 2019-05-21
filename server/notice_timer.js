@@ -1,7 +1,6 @@
 let request=require('request')
 let config=require('../config.json')
 let postTime=new Date()
-let wechat=require('./wechat')
 let wechat_web=require('./wechat_web')
 
 function boss_timer(){

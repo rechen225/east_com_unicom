@@ -1,8 +1,8 @@
 let request=require('request')
 request=request.defaults({jar: true})
 
-const secret='a351358abc87d165fdd33171f7685f14'
-const appid='wxed14cc095edc34e0'
+const secret='secret'
+const appid='appid'
 
 
 function get_token(callback){

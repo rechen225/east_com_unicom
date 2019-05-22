@@ -22,27 +22,27 @@ router.post('/register',(req,res,next)=>{
 	// 	},req)
 	// 	return
 	// }
-	// if(code=='88088'){
-	// 	let time=new Date().getTime()
-	// 	post(config.server+'nahiisp-user/user',{name:name,password:codes,time:time,openId:openid},(body)=>{
-	// 		console.log("注册结果:"+JSON.stringify(body))
-	// 		if(body.success){
-	// 			east_api.login(name,codes,res,(success)=>{
-	// 				res.json({success:success})
-	// 			},0,openId)
-	// 		}else if(body.message=='该号码已经注册!'){
-	// 			east_api.login(name,codes,res,(success)=>{
-	// 				if(success)
-	// 					res.json({success:success})
-	// 				else
-	// 					res.json({success:false,msg:'登录失败'})
-	// 			},0,openId)
-	// 		}else{
-	// 			res.json({success:false,msg:'绑定失败'})
-	// 		}
-	// 	})
-	// 	return
-	// }
+	if(code=='88088'){
+		let time=new Date().getTime()
+		post(config.server+'nahiisp-user/user',{name:name,password:codes,time:time,openId:openid},(body)=>{
+			console.log("注册结果:"+JSON.stringify(body))
+			if(body.success){
+				east_api.login(name,codes,res,(success)=>{
+					res.json({success:success})
+				},0,openId)
+			}else if(body.message=='该号码已经注册!'){
+				east_api.login(name,codes,res,(success)=>{
+					if(success)
+						res.json({success:success})
+					else
+						res.json({success:false,msg:'登录失败'})
+				},0,openId)
+			}else{
+				res.json({success:false,msg:'绑定失败'})
+			}
+		})
+		return
+	}
 	auth.decrypt(token,config.pcode,(str)=>{
 		if(str!=code)
 		{
@@ -297,7 +297,7 @@ router.post('/send_sms',(req,res,next)=>{
 	let param={
 		number:number
 	}
-	let key='hmAAAeastBBBcomCCCsmscode'
+	let key=config.pcode
 	
 	post(config.server+'/nahiisp-sms/sms',param,(body)=>{
 		console.log(body.result.result)

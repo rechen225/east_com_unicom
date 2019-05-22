@@ -26,6 +26,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+let config=require('../config.json')
 app.use(bodyParser.xml({
   limit: '1MB',   // Reject payload bigger than 1 MB
   xmlParseOptions: {
@@ -60,7 +61,7 @@ app.use((req,res,next)=>{
     }else if(!apitime){
       let east_api=require('./server/east_api')
 
-      east_api.login(tel,'ECKoWMEJqqjCUoqh9VVTowMWNlyyywLBR7HM',res,(success)=>{
+      east_api.login(tel,config.key,res,(success)=>{
           if(success)
             next()
           else{

@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 let wechat=require('../server/wechat')
 let wechat_web=require('../server/wechat_web')
+let config=require('../config.json')
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -32,10 +33,12 @@ router.get('/', function(req, res, next) {
 		return
 	}
 
-	let url=encodeURIComponent('http://managecalls.bjunicom.com.cn')
+	//let url=encodeURIComponent('http://managecalls.bjunicom.com.cn')
+
+	url=encodeURIComponent('http://'+config.url)
 
 	if(!openid && !code){
-		res.redirect('https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx30ea4459f5e78bef&redirect_uri='+url+'%2fusers%2f&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect')
+		res.redirect('https://open.weixin.qq.com/connect/oauth2/authorize?appid=${config.app}&redirect_uri='+url+'%2fusers%2f&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect')
 		return
 		
 	}else if(!openid){

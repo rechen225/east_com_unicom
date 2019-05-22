@@ -5,7 +5,7 @@ let auth = require('../server/auth')
 request=request.defaults({jar: true})
 let config=require('../config.json')
 let east_api=require('../server/east_api')
-let codes=`ECKoWMEJqqjCUoqh9VVTowMWNlyyywLBR7HM`
+let codes=config.key;
 let typedata=['疑似欺诈','骚扰电话','广告推销','违法犯罪','响一声','保险理财','房产中介','教育培训','招聘猎头']
 let typedataDefault=['疑似欺诈','骚扰电话','广告推销','违法犯罪','响一声']
 
@@ -22,29 +22,28 @@ router.post('/register',(req,res,next)=>{
 	// 	},req)
 	// 	return
 	// }
-	if(code=='88088'){
-		let time=new Date().getTime()
-		post(config.server+'nahiisp-user/user',{name:name,password:codes,time:time,openId:openid},(body)=>{
-			console.log("注册结果:"+JSON.stringify(body))
-			if(body.success){
-				east_api.login(name,codes,res,(success)=>{
-					res.json({success:success})
-				})
-			}else if(body.message=='该号码已经注册!'){
-				east_api.login(name,codes,res,(success)=>{
-					if(success)
-						res.json({success:success})
-					else
-						res.json({success:false,msg:'登录失败'})
-				})
-			}else{
-				res.json({success:false,msg:'绑定失败'})
-			}
-		})
-		return
-	}
-	auth.decrypt(token,'hmAAAeastBBBcomCCCsmscode',(str)=>{
-		console.log(str+' == '+code)
+	// if(code=='88088'){
+	// 	let time=new Date().getTime()
+	// 	post(config.server+'nahiisp-user/user',{name:name,password:codes,time:time,openId:openid},(body)=>{
+	// 		console.log("注册结果:"+JSON.stringify(body))
+	// 		if(body.success){
+	// 			east_api.login(name,codes,res,(success)=>{
+	// 				res.json({success:success})
+	// 			},0,openId)
+	// 		}else if(body.message=='该号码已经注册!'){
+	// 			east_api.login(name,codes,res,(success)=>{
+	// 				if(success)
+	// 					res.json({success:success})
+	// 				else
+	// 					res.json({success:false,msg:'登录失败'})
+	// 			},0,openId)
+	// 		}else{
+	// 			res.json({success:false,msg:'绑定失败'})
+	// 		}
+	// 	})
+	// 	return
+	// }
+	auth.decrypt(token,config.pcode,(str)=>{
 		if(str!=code)
 		{
 			res.json({success:0,msg:'验证码错误'})
@@ -56,14 +55,14 @@ router.post('/register',(req,res,next)=>{
 			if(body.success){
 				east_api.login(name,codes,res,(success)=>{
 					res.json({success:success})
-				})
+				},0,openid)
 			}else if(body.message=='该号码已经注册!'){
 				east_api.login(name,codes,res,(success)=>{
 					if(success)
 						res.json({success:success})
 					else
 						res.json({success:false,msg:'登录失败'})
-				})
+				},0,openid)
 			}else{
 				res.json({success:false,msg:'绑定失败'})
 			}

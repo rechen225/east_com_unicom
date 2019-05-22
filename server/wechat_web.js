@@ -167,13 +167,32 @@ function boss_note(data,callback){
 
 		let url=`https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=${token}`
 		let date=new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate()+' '+new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds()
+		let typeStr='开户成功';
+		swtich(data.tyepstr){
+			case 2:
+				tyepStr='开户失败-人工处理中'
+				break;
+			case 3:
+				typeStr='开户失败-人工处理中'
+				break;
+			case 4:
+				typeStr='销户成功'
+				break;
+			case 5:
+				typeStr='销户失败-人工处理中'
+				break;
+			case 6:
+				typeStr='销户失败-人工处理中'
+				break;
+		}
+
 		let obj={
 			"touser":openid,
 			"template_id":"1ITtJ5Mnbhxe-0KiCPrP21N4NI1Dvcn2uIjcpmUYyPM",
 			"url":data.url,
 			"topcolor":"#FF0000",
 			"data":{
-				first:{value:'订阅成功提醒',color:'#333'},
+				first:{value:typeStr,color:'#333'},
 				type:{value:'防骚扰服务订阅',color:'#333'},
 				keyword1:{value:date,color:'#333'},
 				keyword3:{value:data.number,color:'#E30'},

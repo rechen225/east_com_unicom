@@ -29,6 +29,7 @@ function boss_timer(){
 				let data={
 					openid:openid_list[i],
 					url:'',
+					typestr:obj.type,
 					date:obj.interceptTime,
 					number:obj.number,
 					//content:obj.type==0?'黑名单':obj.tag,
@@ -80,7 +81,7 @@ function timer(){
 				let obj=msgTime[openid_list[i]]
 				let data={
 					openid:openid_list[i],
-					url:'http://eastcom.123zou.com/users/note',
+					url:'http://managecalls.bjunicom.com.cn/users/note',
 					date:obj.interceptTime,
 					number:obj.interceptNumber,
 					content:obj.type==0?'黑名单':obj.tag,

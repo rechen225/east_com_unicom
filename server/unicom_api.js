@@ -38,7 +38,7 @@ let register=(tel,pwd,callback)=>{
 
 let wxlogin=(openid,res,callback)=>{
 	let url='/nahiisp-user/number?openId='+openid
-	let pwd="ECKoWMEJqqjCUoqh9VVTowMWNlyyywLBR7HM"
+	let pwd=config.key;
 	get(config.server+url,(body)=>{
 		//callback(body)
 		if(body.success && body.result.result.number){

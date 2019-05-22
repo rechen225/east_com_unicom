@@ -2,7 +2,7 @@ let request=require('request')
 request=request.defaults({jar: true})
 let config=require('../config.json')
 
-let login=(tel,pwd,res,callback,req)=>{
+let login=(tel,pwd,res,callback,req,openid)=>{
 	if(req && req.cookies['unicom_test']){
 
 		let tel_times=new Date(new Date().setDate(new Date().getDate()+30))
@@ -37,9 +37,8 @@ let register=(tel,pwd,callback)=>{
 
 
 let wxlogin=(openid,res,callback)=>{
-	console.log('wechat user eastcom login..')
 	let url='/nahiisp-user/number?openId='+openid
-	let pwd="ECKoWMEJqqjCUoqh9VVTowMWNlyyywLBR7HM"
+	let pwd=config.key;
 	get(config.server+url,(body)=>{
 		//callback(body)
 		console.log('login success')

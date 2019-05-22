@@ -168,7 +168,7 @@ function boss_note(data,callback){
 		let url=`https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=${token}`
 		let date=new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate()+' '+new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds()
 		let typeStr='开户成功';
-		swtich(data.tyepstr){
+		switch(data.tyepstr){
 			case 2:
 				tyepStr='开户失败-人工处理中'
 				break;

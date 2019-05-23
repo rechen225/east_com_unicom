@@ -4,7 +4,8 @@ const config=require('../config.json')
 
 
 const secret=config.ser;
-const {t1,t2,appid}=config;
+const appid=config.app;
+const {t1,t2}=config;
 
 function get_token(callback){
 	let url=`https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${appid}&secret=${secret}`

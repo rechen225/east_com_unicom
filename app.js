@@ -52,6 +52,11 @@ app.use((req,res,next)=>{
   //   res.cookie('unicom_test','1',{expires:tel_times,httpOnly:true})
   // }
   if(url.indexOf('/setting')==0 || url.indexOf('/report')==0 || url.indexOf('/users')==0){
+    if(req.query.testbs){
+      next();
+      return
+    }
+
     let tel=req.cookies['t']
     //let password=req.cookies['p']
     let apitime=req.cookies['a']

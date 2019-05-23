@@ -11,6 +11,8 @@ input,button{-webkit-appearance:none;}
 input[type='checkbox']{-webkit-appearance:checkbox;vertical-align: middle;margin-right:.1rem;}
 [v-cloak]{display:none;}
 
+.clear-btn{position:fixed;bottom:0;height:.4rem;width:100%;border-style:none;background:#ED4254;color:#FFF;border-radius:.0rem;font-size:.16rem;}
+
 @font-face {
   font-family: 'iconfont';  /* project id 683815 */
   src: url('//at.alicdn.com/t/font_683815_jd0wrxnmau.eot');

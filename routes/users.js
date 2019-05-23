@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 	let tel=req.cookies['t']
 	let openid=req.cookies['openid']
 	let code=req.query.code
-
+	console.log('???');
 	if(req.query.testbs){
 		let body={ 
 			subscribe: 1,

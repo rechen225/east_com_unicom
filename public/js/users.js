@@ -5,6 +5,7 @@ var vapp=new Vue({
 		user_tel:'',
 		is_open:false,
 		is_open_wait:0,
+		is_ready_logooff:0,
 		wait:false,
 		id:''
 	},
@@ -26,7 +27,7 @@ var vapp=new Vue({
 				return
 			}else{
 				if(this.is_open){
-					vapp_layer.confirm('关闭服务后，您的所用功能将被停用，并且在24小时后才能再次开启，确定要取消吗',{},function(){
+					vapp_layer.confirm('关闭服务后，您的所用功能将被停用，并且在24小时后才能再次开启，确定要取消吗','',function(){
 						scope.is_open=!scope.is_open;
 						scope.wait=true
 						axios.post('/api/subscribe_set',{id:scope.id,isopen:scope.is_open}).then(function(res){
@@ -115,6 +116,30 @@ var vapp=new Vue({
 			}
 			return str+"后可重新开启";
 
+		},
+		logo_off:function(){
+			var scope=this
+			vapp_layer.confirm('销户后，服务将停止，您的数据也将会被删除，确定要销户吗',{},function(){
+				vapp_layer.confirm('销户后，是否保留您的相关信息',{confirm:'是',cancel:'否'},
+					function(){
+						scope.logo_off_now(true);
+					},
+					function(){
+						scope.logo_off_now(false);
+					}
+
+				)
+			})
+		},
+		logo_off_now:function(data){
+			var scope=this;
+			axios.post('/api/logo_off',{data:data}).then(function(res){
+				if(res.data.result){
+					return
+					localStorage.user=''
+					location.href='/register';
+				}
+			})
 		}
 	},
 	mounted:function(){

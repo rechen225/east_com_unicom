@@ -20,8 +20,8 @@ html
 			.alert-confirm.m-alert(v-if='is_confirm')
 				p(v-bind:style="{'text-align':is_left?'left':'center'}") {{alert_txt}}
 				div
-					button(@click='confirm_btn()') 确定
-					button.gray-bg(@click='cancel_btn()')  取消
+					button(@click='confirm_btn()') {{confirm_btn_txt.confirm}}
+					button.gray-bg(@click='cancel_btn()')  {{confirm_btn_txt.cancel}}
 			.alert-alert.m-alert(v-if='is_alert')
 				p {{alert_txt}}
 				//div
@@ -42,6 +42,7 @@ html
 				is_confirm:false,
 				is_left:false,
 				alert_txt:'',
+				confirm_btn_txt:{},
 				confirm_obj:undefined,
 				confirm_func:undefined,
 				cancel_func:undefined
@@ -52,6 +53,10 @@ html
 					this.alert_txt=txt;
 					this.confirm_func=ok;
 					this.cancel_func=cancel;
+					this.confirm_btn_txt={confirm:'确定',cancel:'取消'};
+					if(obj && obj.confirm && obj.cancel){
+						this.confirm_btn_txt=obj;
+					}
 					if(isleft){
 						this.is_left=true
 					}else{

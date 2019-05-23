@@ -1,9 +1,10 @@
 let request=require('request')
 request=request.defaults({jar: true})
+const config=require('../config.json')
 
-const secret='157815b77fe30ed08f18dba68856d74d'
-const appid='wx30ea4459f5e78bef'
 
+const secret=config.ser;
+const {t1,t2,appid}=config;
 
 function get_token(callback){
 	let url=`https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${appid}&secret=${secret}`
@@ -136,7 +137,7 @@ function notice(data,callback){
 		let date=new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate()+' '+new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds()
 		let obj={
 			"touser":openid,
-			"template_id":"5SxFLXdHEuhV6QeUJg8sbm_iBITv_yvWpSHxhp0_sVI",
+			"template_id":t1,
 			"url":data.url,
 			"topcolor":"#FF0000",
 			"data":{
@@ -188,7 +189,7 @@ function boss_note(data,callback){
 
 		let obj={
 			"touser":openid,
-			"template_id":"1ITtJ5Mnbhxe-0KiCPrP21N4NI1Dvcn2uIjcpmUYyPM",
+			"template_id":t2,
 			"url":data.url,
 			"topcolor":"#FF0000",
 			"data":{

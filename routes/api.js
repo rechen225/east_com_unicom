@@ -377,7 +377,7 @@ router.post("/tag_count",(req,res,next)=>{
 router.post('/logo_off',(req,res,next)=>{
 	let data=req.body.data;
 	let number=req.cookies["t"];
-	let url=config.server+'/nahiisp-user/logoff/${number}/${data}';
+	let url=config.server+`/nahiisp-user/logoff/${number}/${data}`;
 	del(url,(body)=>{
 		console.log(body);
 		res.json(body)

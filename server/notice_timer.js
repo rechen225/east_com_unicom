@@ -118,6 +118,7 @@ exports.timer=timer
 exports.boss_timer=boss_timer
 
 function get(url,callback,errcallback){
+	console.log(url);
 	request(url,(err,res,body)=>{
 		//console.log(body)
 		if (!err && res.statusCode == 200) {

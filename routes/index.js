@@ -5,6 +5,7 @@ let wechat=require(('../server/wechat'))
 let wechat_web=require('../server/wechat_web')
 let wechat_msg=require('../server/wechat_msg')
 let east_api=require('../server/east_api')
+let config=require('../config.json')
 
 /* GET home page. */
 router.get(['/index','/'], function(req, res, next) {
@@ -57,11 +58,11 @@ router.get('/register',(req,res,next)=>{
 		}
 		//let url=encodeURIComponent('http://fsr.calltrace.cn/register?url='+req.query.url)
 		//let url=encodeURIComponent('http://managecalls.bjunicom.com.cn/register?url='+req.query.url)
-		let url=encodeURIComponent('http://eastcom.123zou.com/register?url='+req.query.url);
+		let url=encodeURIComponent('http://'+config.url+'register?url='+req.query.url);
 		//http%3a%2f%2ffsr.calltrace.cn%2fusers%2f
 		//北京联通：wx30ea4459f5e78bef
 		//信通院：wxed14cc095edc34e0
-		res.redirect(`https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx30ea4459f5e78bef&redirect_uri=${url}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`)
+		res.redirect(`https://open.weixin.qq.com/connect/oauth2/authorize?appid=${config.app}&redirect_uri=${url}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`)
 		return
 	}else{
 		wechat_web.get_web_token(wechat_code,(body)=>{

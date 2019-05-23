@@ -413,9 +413,11 @@ function del(url,callback){
 		console.log(body)
 		if (!err && res.statusCode == 200) {
 	        callback(JSON.parse(body))
-	    }else{
-	    	console.log(res.statusCode)
+	    }else if(err){
 			callback({success:0})
+		}else{
+	        callback(JSON.parse(body))
+
 		}
 
 	})

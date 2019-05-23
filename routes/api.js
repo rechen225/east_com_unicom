@@ -416,7 +416,7 @@ function del(url,callback){
 	    }else if(err){
 			callback({success:0})
 		}else{
-	        callback(body)
+	        //callback(body)
 
 		}
 

@@ -61,17 +61,18 @@ function timer(){
 		reget()
 		let msgTime={}
 		let openid_list=[]
-		for(var i=0;i<body.result.result.length;i++){
-			let obj=body.result.result[i]
-			if(openid_list.indexOf(obj.openId)==-1){
-				openid_list.push(obj.openId)
-				msgTime[obj.openId]=obj
-				msgTime[obj.openId].time=0
-			}else{
-				msgTime[obj.openId].time++
+		if(body.result.result)
+			for(var i=0;i<body.result.result.length;i++){
+				let obj=body.result.result[i]
+				if(openid_list.indexOf(obj.openId)==-1){
+					openid_list.push(obj.openId)
+					msgTime[obj.openId]=obj
+					msgTime[obj.openId].time=0
+				}else{
+					msgTime[obj.openId].time++
+				}
+				postTime=new Date(obj.createTime)
 			}
-			postTime=new Date(obj.createTime)
-		}
 		//console.log(openid_list.length)
 
 		//console.log('当前未发送通知:'+openid_list.length)

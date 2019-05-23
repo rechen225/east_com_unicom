@@ -55,7 +55,7 @@ function boss_timer(){
 
 function timer(){
 
-	let url=config.server+`/intercept-notice/interceptNotice/`
+	let url=config.server+`/intercept-notice/interceptNotice`
 	//console.log(url)
 	get(url,(body)=>{
 		reget()

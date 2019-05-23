@@ -5,7 +5,7 @@ let wechat_web=require('./wechat_web')
 
 function boss_timer(){
 	console.log('正在检查订阅状况')
-	let url=config.server+'nahiisp-subscribnote/subscribNote'
+	let url=config.server+'/nahiisp-subscribnote/subscribNote'
 	get(url,(body)=>{
 		//console.log(JSON.stringify(body))
 		reget()

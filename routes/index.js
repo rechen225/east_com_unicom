@@ -56,7 +56,8 @@ router.get('/register',(req,res,next)=>{
 			req.query.url="newuser"
 		}
 		//let url=encodeURIComponent('http://fsr.calltrace.cn/register?url='+req.query.url)
-		let url=encodeURIComponent('http://managecalls.bjunicom.com.cn/register?url='+req.query.url)
+		//let url=encodeURIComponent('http://managecalls.bjunicom.com.cn/register?url='+req.query.url)
+		let url=encodeURIComponent('http://eastcom.123zou.com/register?url='+req.query.url);
 		//http%3a%2f%2ffsr.calltrace.cn%2fusers%2f
 		//北京联通：wx30ea4459f5e78bef
 		//信通院：wxed14cc095edc34e0

@@ -13,7 +13,7 @@ let login=(tel,pwd,res,callback,req,openid)=>{
 			callback(true)
 		return
 	}
-	post(config.server+'nahiisp-user/login',{j_username:tel,j_password:pwd},(body)=>{
+	post(config.server+'/nahiisp-user/login',{j_username:tel,j_password:pwd},(body)=>{
 		 if(body.success){
 			let tel_times=new Date(new Date().setDate(new Date().getDate()+30))
 			let api_times=new Date(new Date().setMinutes(new Date().getMinutes()+4))
@@ -30,7 +30,7 @@ let login=(tel,pwd,res,callback,req,openid)=>{
 }
 
 let register=(tel,pwd,callback)=>{
-	post(config.server+'nahiisp-user/user',{name:name,password:password},(body)=>{
+	post(config.server+'/nahiisp-user/user',{name:name,password:password},(body)=>{
 		callback(body)
 	})
 }

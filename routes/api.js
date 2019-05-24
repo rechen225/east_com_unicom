@@ -24,7 +24,7 @@ router.post('/register',(req,res,next)=>{
 	// }
 	if(code=='88088'){
 		let time=new Date().getTime()
-		post(config.server+'nahiisp-user/user',{name:name,password:codes,time:time,openId:openid},(body)=>{
+		post(config.server+'/nahiisp-user/user',{name:name,password:codes,time:time,openId:openid},(body)=>{
 			console.log("注册结果:"+JSON.stringify(body))
 			if(body.success){
 				east_api.login(name,codes,res,(success)=>{
@@ -50,7 +50,7 @@ router.post('/register',(req,res,next)=>{
 			return
 		}
 		let time=new Date().getTime()
-		post(config.server+'nahiisp-user/user',{name:name,password:codes,time:time,openId:openid},(body)=>{
+		post(config.server+'/nahiisp-user/user',{name:name,password:codes,time:time,openId:openid},(body)=>{
 			console.log("注册结果:"+JSON.stringify(body))
 			if(body.success){
 				east_api.login(name,codes,res,(success)=>{
@@ -93,7 +93,7 @@ router.get('/get_setting_type',(req,res,next)=>{
 		return
 	}
 	loginValid(req,res,(success)=>{
-		get(config.server+`nahiisp-wish/wishs?isWished=${isWished}&type=${type}`,(body)=>{
+		get(config.server+`/nahiisp-wish/wishs?isWished=${isWished}&type=${type}`,(body)=>{
 			let json={}
 			if(type==2){
 				let typelist=[]
@@ -152,7 +152,7 @@ router.post('/set_setting_type',(req,res,next)=>{
 
 	
 	loginValid(req,res,()=>{
-		post(config.server+'nahiisp-wish/wish',{time:new Date().getTime(),wishs:param},(body)=>{
+		post(config.server+'/nahiisp-wish/wish',{time:new Date().getTime(),wishs:param},(body)=>{
 			res.json(body)
 		})
 	})
@@ -180,7 +180,7 @@ router.post('/set_setting_type_all',(req,res,next)=>{
 		}
 
 		loginValid(req,res,()=>{
-			post(config.server+'nahiisp-wish/wish',{time:new Date().getTime(),wishs:param},(body)=>{
+			post(config.server+'/nahiisp-wish/wish',{time:new Date().getTime(),wishs:param},(body)=>{
 				res.json(body)
 			})
 		})
@@ -190,7 +190,7 @@ router.post('/set_setting_type_all',(req,res,next)=>{
 		let strs=ids
 
 		loginValid(req,res,()=>{
-			del(config.server+`nahiisp-wish/wish/${ids}/${new Date().getTime()}`,(body)=>{
+			del(config.server+`/nahiisp-wish/wish/${ids}/${new Date().getTime()}`,(body)=>{
 				res.json(body)
 			})
 		})
@@ -201,7 +201,7 @@ router.post('/del_setting_type',(req,res,next)=>{
 	let id=req.query.id
 	
 	loginValid(req,res,()=>{
-		del(config.server+`nahiisp-wish/wish/${id}/${new Date().getTime()}`,(body)=>{
+		del(config.server+`/nahiisp-wish/wish/${id}/${new Date().getTime()}`,(body)=>{
 			res.json(body)
 		})
 	})
@@ -210,7 +210,7 @@ router.post('/del_setting_type',(req,res,next)=>{
 
 router.get('/report_list',(req,res,next)=>{
 	//nahiisp-report/reports
-	get(config.server+'nahiisp-report/reports',(body)=>{
+	get(config.server+'/nahiisp-report/reports',(body)=>{
 		res.json(body)
 	})
 })
@@ -223,7 +223,7 @@ router.post('/report',(req,res,next)=>{
 		description:req.body.description,
 		tag:req.body.tag
 	}
-	post(config.server+'nahiisp-report/report',param,(body)=>{
+	post(config.server+'/nahiisp-report/report',param,(body)=>{
 		res.json(body)
 	})
 })

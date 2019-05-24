@@ -44,7 +44,7 @@ let wxlogin=(openid,res,callback)=>{
 		console.log('login success')
 		if(body.success && body.result.result.number){
 			let tel=body.result.result.number
-			post(config.server+'nahiisp-user/login',{j_username:tel,j_password:pwd},(body)=>{
+			post(config.server+'/nahiisp-user/login',{j_username:tel,j_password:pwd},(body)=>{
 				 if(body.success){
 					let tel_times=new Date(new Date().setDate(new Date().getDate()+30))
 					let api_times=new Date(new Date().setMinutes(new Date().getMinutes()+4))

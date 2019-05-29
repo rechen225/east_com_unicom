@@ -82,7 +82,7 @@ function timer(){
 				let obj=msgTime[openid_list[i]]
 				let data={
 					openid:openid_list[i],
-					url:'http://managecalls.bjunicom.com.cn/users/note',
+					url:config.notice+'/users/note',
 					date:obj.interceptTime,
 					number:obj.interceptNumber,
 					content:obj.type==0?'黑名单':obj.tag,
@@ -107,11 +107,6 @@ function timer(){
 		}
 
 		
-	},(err)=>{
-		setTimeout(()=>{
-			console.log('服务器异常')
-			timer()
-		},60000)
 	})
 }
 

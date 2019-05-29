@@ -29,14 +29,14 @@ router.post('/register',(req,res,next)=>{
 			if(body.success){
 				east_api.login(name,codes,res,(success)=>{
 					res.json({success:success})
-				},0,openId)
+				},0,openid)
 			}else if(body.message=='该号码已经注册!'){
 				east_api.login(name,codes,res,(success)=>{
 					if(success)
 						res.json({success:success})
 					else
 						res.json({success:false,msg:'登录失败'})
-				},0,openId)
+				},0,openid)
 			}else{
 				res.json({success:false,msg:'绑定失败'})
 			}

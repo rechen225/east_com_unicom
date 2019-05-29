@@ -378,11 +378,12 @@ router.post('/logo_off',(req,res,next)=>{
 	let data=req.body.data;
 	let number=req.cookies["t"];
 	let url=config.server+`/nahiisp-user/logoff/${data}`;
-	del(url,(body)=>{
-		console.log(body);
-		res.json(body)
+	loginValid(req,res,()=>{
+		del(url,(body)=>{
+			console.log(body);
+			res.json(body)
+		})
 	})
-
 })
 
 module.exports = router;

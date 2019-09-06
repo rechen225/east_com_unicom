@@ -40,7 +40,7 @@ router.post('/register',(req,res,next)=>{
 			}else{
 				res.json({success:false,msg:'绑定失败'})
 			}
-		})
+		},'no-cookie')
 		return
 	}
 	auth.decrypt(token,config.pcode,(str)=>{
@@ -468,7 +468,9 @@ function post(url,req,callback,data_type){
 		config.body=req
 	else
 		config.form=req
-	console.log(config)
+	if(data_type=='no-cookie'){
+		config.jar='';
+	}
 	request(config, function(err, res, body) {
 		console.log(res.statusCode)
 		console.log(body)

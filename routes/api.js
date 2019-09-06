@@ -398,6 +398,7 @@ router.post('/logo_off',(req,res,next)=>{
 			console.log(body);
 			res.clearCookie('t');
 			res.clearCookie('a');
+			res.clearCookie('openid');
 			res.json(body)
 
 		})

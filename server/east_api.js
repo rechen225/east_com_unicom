@@ -25,7 +25,6 @@ let login=(tel,pwd,res,callback,req,openid)=>{
           	//res.redirect(302,'/register?url='+url)
           	callback(false)
         }
-
 	},'form')
 }
 

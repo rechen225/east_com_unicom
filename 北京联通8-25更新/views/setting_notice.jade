@@ -1,0 +1,21 @@
+extends layout
+
+block content
+	article#notice(v-cloak)
+		h5 拦截通知
+		.form
+			p
+				span.left
+					a.choose(v-bind:class="[type==1?'choose-c':'']",@click='type=1')
+						i
+					b.left 拦截后通知
+			p
+				span.left
+					a.choose(v-bind:class="[type==2?'choose-c':'']",@click='type=2')
+						i
+					b.left 拦截后不通知
+					
+			div
+				button(@click='change_notice') 确定修改
+	script(src='/js/notice.js?v=#{_v}')
+				

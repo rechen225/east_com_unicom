@@ -1,0 +1,62 @@
+extends layout
+
+block content
+	article#list(v-cloak,style="background:#F7F7F7;")
+		.common-banner.report-list-banner.unicom-banner 举报号码
+		.report-list-box
+			h5.report-title 您已举报{{list.length}}次号码
+			ul.report-list
+				li(v-for="obj in list")
+					span {{obj.number}}
+					label {{obj.createTime}}
+		.common-button
+			a(href='/report/') 添加
+
+
+	//article#list(v-cloak)
+		h5 您已举报{{list.length}}次号码
+			a(href='/report/') 我要举报
+		div.table
+			ul.roster-list
+				li(v-for="obj in list")
+					h4
+						label {{obj.number}}
+						span {{obj.createTime}}
+					h3
+						label{{obj.description}}
+						//a.iconfont.btn(href="javascript:;")
+							span 审核中
+
+
+
+
+		.alert-layer(v-if='false')
+			.alert-add.l-alert
+				.close-btn(@click="is_add=false") ×
+				h4 添加到白名单
+				ul
+					li
+						label 固话
+						a.choose(v-bind:class="[add_obj.type==1?'choose-c':'']",@click='add_obj.type=1')
+							i
+						input.m-txt(placeholder='区号',type='text',v-model='add_obj.tel1')
+						b.text-line ——
+						input.l-txt(placeholder="电话号码",type='text',v-model='add_obj.tel2')
+
+					li
+						label 手机
+						a.choose(v-bind:class="[add_obj.type==2?'choose-c':'']",@click='add_obj.type=2')
+							i
+						input.xl-txt(placeholder="11位手机号码",type='text',v-model='add_obj.tel3')
+					li
+						label 其他
+						a.choose(v-bind:class="[add_obj.type==3?'choose-c':'']",@click='add_obj.type=3')
+							i
+						input.xl-txt(placeholder="其他格式号码",type='text',v-model='add_obj.tel4')
+				br
+				ul
+					li
+						label 备注
+						input.xxl-txt(placeholder="请输入备注内容,如电话销售",type='text',v-model='add_obj.remark')
+				button(@click='add_roster()') 确定添加
+	script(src='/js/report_list.js?v=#{_v}')

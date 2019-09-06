@@ -1,0 +1,38 @@
+extends layout
+
+block content
+	article#users.users(v-cloak)
+		.user-card
+			p
+				label.user-ani
+					i
+					i
+					i
+				img.head(src='#{wechat.headimgurl}')
+
+			p
+				strong=tel
+		section
+			div
+				ul
+					li
+						p
+							label 拦截通知
+						span(style='position: absolute;right: .7rem;line-height:.45rem;')
+						aside.btn(@click="open_notice",v-bind:class="[is_notice?'open':'']")
+							span
+
+					li.btn(onclick="location.href='/users/note'")
+						p
+							label 拦截记录
+						a.select-more.iconfont(href='javascript:;') &#xe654;
+					li.btn(onclick="location.href='/report/list'")
+						p
+							label 举报记录
+						a.select-more.iconfont(href='javascript:;') &#xe654;
+					li.btn
+						p
+							label 异常拦截申诉
+						a.select-more.iconfont(href='javascript:;') &#xe654;
+				button.clear-btn(v-on:click='logo_off') 注销
+	script(src="/js/users.js?v=#{_v}")

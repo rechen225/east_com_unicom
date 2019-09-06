@@ -53,12 +53,13 @@ let wxlogin=(openid,res,callback)=>{
 					res.cookie('a',1,{expires:api_times,httpOnly:true})
 					callback(true)
 		        }else{
-		          	//res.redirect(302,'/register?url='+url)
+		          	res.redirect(302,'/register?url='+url)
 		          	callback(false)
 		        }
 
 			},'form')
 		}else{
+			//res.redirect(302,'/register?url='+url)
 			callback(false)
 		}
 	})
@@ -74,9 +75,13 @@ module.exports={
 
 function get(url,callback){
 	request(url,(err,res,body)=>{
+		console.log(err)
+		//console.log(res)
 		console.log(body)
 		if (!err && res.statusCode == 200) {
 	        callback(JSON.parse(body))
+	    }else{
+	    	callback({success:false,msg:err});
 	    }
 	})
 }
@@ -96,12 +101,15 @@ function post(url,req,callback,data_type){
 	else
 		config.form=req
 	console.log(config)
+	console.log('等待请求结束');
 	request(config, function(err, res, body) {
 		console.log(err)
 		console.log(res.statusCode)
 		console.log(body)
 	    if (!err && res.statusCode == 200) {
 	        callback(body)
+	    }else{
+	    	console.log(err)
 	    }
 	});
 }

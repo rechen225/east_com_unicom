@@ -30,7 +30,7 @@ function boss_timer(){
 					openid:openid_list[i],
 					url:'',
 					typestr:obj.type,
-					date:obj.interceptTime,
+					date:obj.createTime,
 					number:obj.number,
 					//content:obj.type==0?'黑名单':obj.tag,
 					remark:'感谢'
@@ -80,12 +80,28 @@ function timer(){
 		if(openid_list.length>0){
 			for(var i=0;i<openid_list.length;i++){
 				let obj=msgTime[openid_list[i]]
+				//08-30 增加对type类型分类
+				/* type Integer 必须  0- 黑名单 
+					1- Tag（标记种类）
+					2- 正则表达式
+					tag String 非必须  当type为1时不能为空，填写标记种类
+					regex String 非必须  当type为2时不能为空，填写拦截的正则表达式 */
+				let interceptType = '骚扰电话'
+				if(obj.type == 0){
+					interceptType = '黑名单'
+				}
+				if(obj.type == 1){
+					interceptType = obj.tag
+				}
+				if(obj.type == 2){
+					interceptType = obj.regex
+				}
 				let data={
 					openid:openid_list[i],
 					url:config.notice+'/users/note',
 					date:obj.interceptTime,
 					number:obj.interceptNumber,
-					content:obj.type==0?'黑名单':obj.tag,
+					content:interceptType,
 					remark:'点击查看详情'
 				}
 				//console.log(data)
@@ -118,12 +134,12 @@ function get(url,callback,errcallback){
 	request(url,(err,res,body)=>{
 		//console.log(body)
 		if (!err && res.statusCode == 200) {
-	        callback(JSON.parse(body))
+			if(body[0]=='{')
+	        	callback(JSON.parse(body));
+	        else
+	        	callback({success:0,msg:'接口数据异常'});
 	    }else{
-
 	    		console.log('[ '+url+' ]接口调用失败')
-	    		
-	    		console.log(res.statusCode)
 	    	if(errcallback){
 	    		errcallback(err)
 	    	}

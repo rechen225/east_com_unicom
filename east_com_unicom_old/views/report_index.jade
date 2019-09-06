@@ -1,0 +1,34 @@
+extends layout
+
+block content
+	article#report(v-cloak)
+		h5 举报来电
+		.form
+			p
+				label 举报号码
+				input.xxxl-txt(type='text',placeholder='请填写要举报的电话',v-model='tel')
+			p
+				label 骚扰类型
+				a.select-more.iconfont(href='',) &#xe654;
+				select.right-select(v-model="type")
+					option(v-for="obj in type_list",v-bind:value="obj") {{obj}}
+				//- span.left
+				//- 	a.choose(v-bind:class="[type==1?'choose-c':'']",@click='type=1')
+				//- 		i
+				//- 	b.left 骚扰电话
+				//- 	a.choose(v-bind:class="[type==2?'choose-c':'']",@click='type=2')
+				//- 		i
+				//- 	b.left 诈骗电话
+				//- 	a.choose(v-bind:class="[type==3?'choose-c':'']",@click='type=3')
+				//- 		i
+				//- 	b.left 其他
+			p(v-if='type=="其他类型"')
+				label 其他类型
+				input.xxxl-txt(type='text',placeholder='请填写其他类型',v-model='else_type')
+			p
+				label 内容描述
+				input.xxxl-txt(type='text',placeholder='请填写要号码描述',v-model='remark')
+			div
+				button(@click='add_report') 举报来电
+	script(src='/js/report.js?v=#{_v}')
+				

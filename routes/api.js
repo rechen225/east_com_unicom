@@ -22,7 +22,7 @@ router.post('/register',(req,res,next)=>{
 	// 	},req)
 	// 	return
 	// }
-	if(code=='88088'){
+	if(code=='39865'){
 		let time=new Date().getTime()
 		post(config.server+'/nahiisp-user/user',{name:name,password:codes,time:time,openId:openid},(body)=>{
 			console.log("注册结果:"+JSON.stringify(body))
@@ -291,9 +291,24 @@ router.get('/get_setting_special',(req,res,next)=>{
 
 router.post('/send_sms',(req,res,next)=>{
 	let number=req.body.number
-	if(!number.match(/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/)){
+	if(!number.match(/^(1[3-9][0-9])\d{8}$/)){
 		res.json({success:0,msg:'手机号码格式不正确'})
 	}
+
+	console.log(new Date());
+	let num_list=require('../server/unicom_number').num_list
+	let snippet=parseInt(number.substring(0,7));
+	console.log(snippet)
+	//08-31修改，仅限青海省无法注册业务。numberlist修改为仅青海省
+	if(num_list.indexOf(snippet)!=-1){
+		console.log(new Date());
+		res.json({success:0,msg:'青海省号段暂未开通业务，敬请谅解'})
+		return;
+	}
+
+	//res.json({success:false,msg:'该公众号正在建设中，部分功能暂不开放，敬请谅解'});
+
+	//return;
 	let param={
 		number:number
 	}
@@ -309,7 +324,7 @@ router.post('/send_sms',(req,res,next)=>{
 				res.json({success:1,msg:'发送成功',token:token})
 			})
 		}else{
-			auth.encrypt(`88088`,key,(token)=>{
+			auth.encrypt(`39865`,key,(token)=>{
 				res.json({success:1,msg:'发送成功',token:token})
 			})
 		}
@@ -381,7 +396,10 @@ router.post('/logo_off',(req,res,next)=>{
 	loginValid(req,res,()=>{
 		del(url,(body)=>{
 			console.log(body);
+			res.clearCookie('t');
+			res.clearCookie('a');
 			res.json(body)
+
 		})
 	})
 })

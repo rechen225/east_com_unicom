@@ -21,6 +21,7 @@
 ```json
 {
 	"server":"http://127.0.0.1:8080",
+	"port":"端口号",
 	"key":"",
 	"app":"微信公众号appid",
 	"ser":"微信公众号appsecret",

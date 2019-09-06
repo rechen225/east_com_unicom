@@ -1,0 +1,31 @@
+extends layout
+
+block content
+	.unicom-menu#unicom
+		.banner
+		.list
+			ul
+				li
+					a(href="/setting/type")
+				li
+					a(href="/setting/roster?type=-1")
+				li
+					a(href="/setting/roster?type=1")
+				li
+					a(href="/users/")
+		.txt
+			p 1、来电管家业务是联通推出的一款面向用户的防骚扰产品，能够依据用户个人的接听意愿进行来电智能化管理。
+			p 2、本业务目前可提供9大类骚扰电话的防护，包括疑似欺诈、骚扰电话、广告推销、违法犯罪、响一声、保险理财、房产中介、教育培训、招聘猎头。您可根据自己的意愿设置防护类型及拦截灵敏度。同时您还可以个性化设置白名单以及黑名单号码，优先级为白名单>黑名单>拦截设置。
+			p(v-if='isshow') 3、本业务目前仅限通过微信公众号订购，订购成功后24小时内完成开通，会收到开通提醒通知。
+			p(v-if='isshow') 温馨提示
+			p(v-if='isshow') 骚扰电话标记来源于工信部全国防骚扰综合服务平台。由于号码库更新效率以及新的骚扰电话不断出现等原因，不能保证对骚扰电话100%精准拦截；同时个别号码可能存在标记与实际不符的情况，存在误拦风险。请您根据需要选择需要拦截的骚扰类型和灵敏度。
+			p(v-if='isshow') 4、近期由于设备及业务互斥原因，部分用户暂时不支持此业务订购，详情请咨询10010。
+			h4(v-on:click='isshow=!isshow',v-bind:class="[isshow?'unicom-show':'']") {{isshow?'点击收起':'点击查看更多'}}
+				i
+	script.
+		var vapp=new Vue({
+			el:'#unicom',
+			data:{
+				isshow:false
+			}
+		})

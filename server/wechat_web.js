@@ -5,7 +5,7 @@ const config=require('../config.json')
 
 const secret=config.ser;
 const appid=config.app;
-const {t1,t2}=config;
+const {t1,t2,t3}=config; //08-28增加t3，原t2标题绑定成功不合适
 
 function get_token(callback){
 	let url=`https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${appid}&secret=${secret}`
@@ -53,66 +53,73 @@ function get_user(openid,callback){
 }
 
 function set_menu(callback){
-	get_token((token)=>{
-		let url=`https://api.weixin.qq.com/cgi-bin/menu/create?access_token=${token}`
+
+		let backOrigin='http://'+config.url
 		let menu= {
 		     "button":[
 		      {
-		           "name":"接听意愿",
+		           "name":"拦截设置",
 		           "sub_button":[
 		           	{    
 		               "type":"view",
-		               "name":"拦截种类",
-		               "url":"http://fsr.calltrace.cn/setting/type"
+		               "name":"拦截种类设置",
+		               "url":backOrigin+"/setting/type"
 		            },
 		            {
 		               "type":"view",
 		               "name":"黑名单设置",
-		               "url":"http://fsr.calltrace.cn/setting/roster?type=-1"
+		               "url":backOrigin+"/setting/roster?type=-1"
 		            },
 		            {
 		            	"type":"view",
-		            	"name":"允许通话名单",
-		            	"url":"http://fsr.calltrace.cn/setting/roster?type=1"
+		            	"name":"白名单设置",
+		            	"url":backOrigin+"/setting/roster?type=1"
 		            }
 		            ]
-		       },{
-		       		"name":"个人中心",
-		       		// "type":"view",
-		       		// "url":"http://fsr.calltrace.cn/users/"
-		       		"sub_button":[
-			       		{
-			       			"type":"view",
-			       			"name":"个人中心",
-			       			"url":"http://fsr.calltrace.cn/users/"	
-			       		},
-			       		{
-			       			"type":"view",
-			       			"name":"注册账号",
-			       			"url":"http://fsr.calltrace.cn/register"
-			       		}
-		       		]
-		       },{
-		       	"name":"关于我们",
+		       },
+		       {
+		       		"name":"拦截记录",
+		       		"type":"view",
+		       		"url":backOrigin+"/users/note"
+		       		// "sub_button":[
+			       	// 	{
+			       	// 		"type":"view",
+			       	// 		"name":"个人中心",
+			       	// 		"url":backOrigin+"/users/"	
+			       	// 	},
+			       	// 	{
+			       	// 		"type":"view",
+			       	// 		"name":"注册账号",
+			       	// 		"url":backOrigin+"/register"
+			       	// 	}
+		       		// ]
+		       },
+		       {
+		       	"name":"发现更多",
 		       	"sub_button":[
 			       	{
 			       		"type":"click",
-			       		"name":"公众号介绍",
+			       		"name":"业务介绍",
 			       		"key":"about_us"
 			       	},
 			       	{
 			       		"type":"click",
-			       		"name":"行业信息",
-			       		"key":"hyxx"
+			       		"name":"常见问题",
+			       		"key":"not"
 			       	},
 			       	{
-			       		"type":"click",
-			       		"name":"相关新闻",
-			       		"key":"news"
+			       		"type":"view",
+			       		"name":"个人中心",
+			       		"url":backOrigin+"/users/"	
 			       	}
 		       	]
 		       }]
 		 }
+		 console.log(JSON.stringify(menu))
+
+	get_token((token)=>{
+		let url=`https://api.weixin.qq.com/cgi-bin/menu/create?access_token=${token}`
+		
 		//  let menu={
 		//  	"button":[
 		//  	{"name":"拦截种类","sub_button":[
@@ -122,7 +129,7 @@ function set_menu(callback){
 		//  	}
 		//  ]
 		// }
-
+		
 		post(url,menu,(body)=>{
 			callback(body)
 		}) 
@@ -132,6 +139,11 @@ function set_menu(callback){
 
 function notice(data,callback){
 	//let openid='oy84s1FY0bf1k0gk2bEBbWuAbpqM'
+	/* {{first.DATA}}
+来电日期：{{keyword1.DATA}}
+来电号码：{{keyword2.DATA}}
+拦截原因：{{keyword3.DATA}}
+{{remark.DATA}} */
 	let openid=data.openid
 	get_token((token)=>{
 		let url=`https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=${token}`
@@ -139,13 +151,15 @@ function notice(data,callback){
 		let obj={
 			"touser":openid,
 			"template_id":t1,
-			"url":data.url,
+			"url":'http://'+config.url+'/users/note',
 			"topcolor":"#FF0000",
 			"data":{
-				first:{value:'骚扰电话拦截',color:'#333'},
-				keynote1:{value:data.date,color:'#333'},
-				keynote2:{value:data.content+" "+data.number,color:'#E30'},
-				remark:{value:data.remark,color:'#333'}
+				first:{value:'您好，已为您拦截一次骚扰电话',color:'#333'},
+				keyword1:{value:data.date,color:'#333'},
+				keyword2:{value:data.number,color:'#E30'},
+				keyword3:{value:data.content,color:'#E30'}, 
+				//keyword3:{value:'骚扰电话',color:'#E30'}, 
+				remark:{value:'',color:'#333'}
 			}
 		}
 		post(url,obj,(body)=>{
@@ -169,36 +183,58 @@ function boss_note(data,callback){
 
 		let url=`https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=${token}`
 		let date=new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate()+' '+new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds()
-		let typeStr='开户成功';
-		switch(data.tyepstr){
+		//开户成功 改为  业务开通成功
+		let typeStr='业务开通成功，感谢您的支持';
+		switch(data.typestr){
 			case 2:
-				tyepStr='开户失败-人工处理中'
+				//'开户失败-人工处理中（cbss）'
+				typeStr='您的号码暂时无法开通此业务，感谢您的支持'
 				break;
 			case 3:
-				typeStr='开户失败-人工处理中'
+				//typeStr='业务开通失败，人工处理中（系统异常）'
+				typeStr='您的号码暂时无法开通此业务，感谢您的支持'
 				break;
 			case 4:
-				typeStr='销户成功'
+				typeStr='您的号码已取消此业务'
 				break;
 			case 5:
-				typeStr='销户失败-人工处理中'
+				typeStr='您的号码暂时无法取消此业务，请联系人工客服'
 				break;
 			case 6:
-				typeStr='销户失败-人工处理中'
+				typeStr='您的号码暂时无法取消此业务，请联系人工客服'
 				break;
 		}
 
 		let obj={
-			"touser":openid,
+			/* "touser":openid,
 			"template_id":t2,
 			"url":data.url,
 			"topcolor":"#FF0000",
 			"data":{
-				first:{value:typeStr,color:'#333'},
+				first:{value:typeStr,color:'#ee8761'},
 				type:{value:'防骚扰服务订阅',color:'#333'},
-				keyword1:{value:date,color:'#333'},
-				keyword3:{value:data.number,color:'#E30'},
-				keyword2:{value:'无',color:'#333'},
+				keyword1:{value:data.number,color:'#E30'},
+				keyword2:{value:data.date,color:'#333'},
+				//keyword3:{value:'无',color:'#333'},
+				remark:{value:'感谢您的使用',color:'#333'} */
+
+			// 08-28 新模版消息，用于告知业务下发情况
+			/* 
+			{{first.DATA}}
+				受理号码：{{keyword1.DATA}}
+				业务名称：{{keyword2.DATA}}
+				受理时间：{{keyword3.DATA}}
+			{{remark.DATA}}*/
+			"touser":openid,
+			"template_id":t3,
+			"url":'http://'+config.url+'/setting/type',
+			//"url":data.url,
+			"topcolor":"#FF0000",
+			"data":{
+				first:{value:typeStr,color:'#E30'},
+				keyword1:{value:data.number,color:'#333'},
+				keyword2:{value:'防骚扰服务订阅',color:'#E333'},
+				keyword3:{value:data.date,color:'#E333'},
 				remark:{value:'',color:'#333'}
 			}
 		}

@@ -1,0 +1,100 @@
+doctype html
+html
+	head
+		title= title
+		meta(name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no")
+		link(rel='stylesheet', href='/css/index.css?ver=#{_v}')
+		script(src="/js/sys/mobile.js?v=#{_v}")
+		script(src="/js/sys/vue.min.js")
+		script(src="/js/sys/axios.min.js?v=#{_v}")
+	body
+	block content
+
+	#export_dom(v-cloak)
+		.alert-layer(v-if='is_confirm || is_alert || is_alert_min' v-bind:style='{background:is_alert_min?"rgba(0,0,0,0)":""}')
+			.alert-confirm.m-alert(v-if='is_confirm')
+				p(v-bind:style="{'text-align':is_left?'left':'center'}") {{alert_txt}}
+				div
+					button(@click='confirm_btn()') {{confirm_btn_txt.confirm}}
+					button.gray-bg(@click='cancel_btn()')  {{confirm_btn_txt.cancel}}
+			.alert-alert.m-alert(v-if='is_alert')
+				p {{alert_txt}}
+				//div
+					button(@click='confirm_btn()') 确定
+			.alert-alert.m-alert.alert-min(v-if='is_alert_min')
+				p {{alert_txt}}
+				//div
+					button(@click='confirm_btn()') 确定
+
+	script.
+		//- if(!localStorage.user && location.pathname!='/' && location.pathname!='/register')
+		//- 	location.href='/register?url='+escape(location.href);
+		var vapp_layer=new Vue({
+			el:'#export_dom',
+			data:{
+				is_alert:false,
+				is_alert_min:false,
+				is_confirm:false,
+				is_left:false,
+				alert_txt:'',
+				confirm_btn_txt:{},
+				confirm_obj:undefined,
+				confirm_func:undefined,
+				cancel_func:undefined
+			},
+			methods:{
+				confirm:function(txt,obj,ok,cancel,isleft){
+					this.is_confirm=true;
+					this.alert_txt=txt;
+					this.confirm_func=ok;
+					this.cancel_func=cancel;
+					this.confirm_btn_txt={confirm:'确定',cancel:'取消'};
+					if(obj && obj.confirm && obj.cancel){
+						this.confirm_btn_txt=obj;
+					}
+					if(isleft){
+						this.is_left=true
+					}else{
+						this.is_left=false
+					}
+				},
+				confirm_btn:function(){
+					this.is_confirm=false;
+					if(this.confirm_func){
+						this.confirm_func(this.confirm_obj);
+					}
+				},
+				cancel_btn:function(){
+					this.is_confirm=false;
+					if(this.cancel_func){
+						this.cancel_func(this.confirm_obj);
+					}
+				},
+				alert:function(txt,time,callback){
+					var scope=this;
+					this.alert_txt=txt;
+					this.is_alert=true;
+					if(!time || time>=0){
+						setTimeout(function(){
+							scope.is_alert=false;
+							if(callback){
+								callback();
+							}
+						},time?time:1500)
+					}
+				},
+				alert_min:function(txt,time,callback){
+					var scope=this;
+					this.alert_txt=txt;
+					this.is_alert_min=true;
+					if(!time || time>=0){
+						setTimeout(function(){
+							scope.is_alert_min=false;
+							if(callback){
+								callback();
+							}
+						},time?time:1000)
+					}
+				}
+			}
+		})

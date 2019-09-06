@@ -7,7 +7,9 @@ var vapp=new Vue({
 		is_open_wait:0,
 		is_ready_logooff:0,
 		wait:false,
-		id:''
+		is_notice:false,
+		id:'',
+		noticeid:''
 	},
 	methods:{
 		change_func_index:function(index){
@@ -16,7 +18,27 @@ var vapp=new Vue({
 			else
 				this.show_index=index;
 		},
+		open_notice:function(){
+			var scope=this
+			if(this.wait){
+				vapp_layer.alert_min("请不要频繁操作")
+				return
+			}
+			this.wait=true
+			this.is_notice=!this.is_notice
+			var id=''
+			if(this.noticeid && !this.is_notice)
+				id=this.noticeid
 
+			axios.post('/api/set_notice?id='+id).then(function(res){
+				scope.wait=false
+				if(res.data.success){
+					if(res.data.result.result){
+						scope.noticeid=res.data.result.result
+					}
+				}
+			})
+		},
 		open_func:function(){
 			var scope=this
 			if(localStorage.open_wait && this.is_open_wait){
@@ -119,28 +141,55 @@ var vapp=new Vue({
 		},
 		logo_off:function(){
 			var scope=this
-			vapp_layer.confirm('销户后，服务将停止，您的数据也将会被删除，确定要销户吗',{},function(){
-				vapp_layer.confirm('销户后，是否保留您的相关信息',{confirm:'是',cancel:'否'},
-					function(){
-						scope.logo_off_now(true);
-					},
-					function(){
+			vapp_layer.confirm('注销后，服务将停止，您的数据也将会被删除,你的拦截设置也将清除，确定要销户吗',{},function(){
+				//vapp_layer.confirm('销户后，是否保留您的相关信息',{confirm:'是',cancel:'否'},
 						scope.logo_off_now(false);
-					}
-
-				)
+					// ,
+					// function(){
+					// 	scope.logo_off_now(false);
+					// }
 			})
 		},
 		logo_off_now:function(data){
 			var scope=this;
 			axios.post('/api/logo_off',{data:data}).then(function(res){
 				if(res.data.result){
-					return
-					localStorage.user=''
+					//return   08-26,注销后未重置页面，尝试return放在最后
+					localStorage.user='';
 					location.href='/register';
+					return
 				}
 			})
-		}
+		},
+		select_notice:function(){
+			var scope=this
+			axios.get('/api/get_notice').then(function(res){
+				if(res.data.success){
+					if(res.data.result.result){
+						scope.noticeid=res.data.result.result.id
+						scope.is_notice=true
+					}else{
+						scope.is_notice=false
+					}
+				}
+				scope.get_note()
+			})
+		},
+		get_note:function(){
+			var url='/api/note_list'
+			var scope=this
+			axios.get(url).then(function(res){
+				if(res.data.success)
+					scope.note_list=res.data.result.result
+
+			})
+		},
+	},
+	created:function(){
+		var scope=this;
+		console.log(this.select_notice);
+		this.select_notice();
+
 	},
 	mounted:function(){
 		this.user_tel=localStorage.user;

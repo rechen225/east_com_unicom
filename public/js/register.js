@@ -9,7 +9,7 @@ var vapp=new Vue({
 	},
 	methods:{
 		post_code:function(){
-			if(!this.tel.match(/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/)){
+			if(!this.tel.match(/^(1[3-9][0-9])\d{8}$/)){
 				vapp_layer.alert_min('手机号码格式不正确')
 				return
 			}
@@ -18,11 +18,16 @@ var vapp=new Vue({
 			var scope=this;
 			axios.post('/api/send_sms',{number:this.tel}).then(function(res){
 				if(res.data.success)
-					scope.token=res.data.token
+					scope.token=res.data.token;
+				else{
+					vapp_layer.alert_min(res.data.msg)
+					scope.post_time=0;
+				}
 			})
 			var total_code=setInterval(function(){
-				scope.post_time--;
-				if(scope.post_time==0){
+				if(scope.post_time>0)
+					scope.post_time--;
+				if(scope.post_time<=0){
 					clearInterval(total_code);
 				}
 			},1000)
@@ -47,7 +52,9 @@ var vapp=new Vue({
 				token:scope.token
 			}).then(function(res){
 				if(res.data.success){
-					vapp_layer.alert_min('绑定成功');
+					//vapp_layer.alert_min('绑定成功');
+					//2019-08-27 修改注册成功时弹出消息文字描述。  
+					vapp_layer.alert_min('注册成功，业务将在24小时内开通！');
 					localStorage.switch_type=''
 					setTimeout(function(){
 						if(!next_url || next_url=='undefined'){

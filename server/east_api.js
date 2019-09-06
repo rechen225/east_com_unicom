@@ -1,5 +1,5 @@
 let request=require('request')
-request=request.defaults({jar: true})
+request=request.defaults({jar: false})
 let config=require('../config.json')
 
 let login=(tel,pwd,res,callback,req,openid)=>{
@@ -99,8 +99,6 @@ function post(url,req,callback,data_type){
 		config.body=req
 	else
 		config.form=req
-	console.log(config)
-	console.log('等待请求结束');
 	request(config, function(err, res, body) {
 		console.log(err)
 		console.log(res.statusCode)

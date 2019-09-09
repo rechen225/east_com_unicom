@@ -26,7 +26,7 @@ router.get('/register',(req,res,next)=>{
 				}else{
 					res.render('register',{title:'用户绑定',url:req.query.url})
 				}
-			})
+			},req)
 			return
 		}
 		res.render('register',{title:'用户绑定',url:req.query.url})
@@ -75,7 +75,7 @@ router.get('/register',(req,res,next)=>{
 					}else{
 						res.render('register',{title:'用户绑定',url:req.query.url})
 					}
-				})
+				},req)
 				return
 			}
 			res.render('register',{title:'用户绑定',url:'/users/'})

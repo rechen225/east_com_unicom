@@ -36,7 +36,7 @@ let register=(tel,pwd,callback)=>{
 }
 
 
-let wxlogin=(openid,res,callback,req)=>{
+let wxlogin=(openid,res,callback)=>{
 	let url='/nahiisp-user/number?openId='+openid
 	let pwd=config.key;
 	get(config.server+url,(body)=>{
@@ -44,7 +44,6 @@ let wxlogin=(openid,res,callback,req)=>{
 		if(body.success && body.result.result.number){
 			let tel=body.result.result.number
 			post(config.server+'/nahiisp-user/login',{j_username:tel,j_password:pwd},(body,jar)=>{
-				req.session.user=jar;
 				 if(body.success){
 					let tel_times=new Date(new Date().setDate(new Date().getDate()+30))
 					let api_times=new Date(new Date().setMinutes(new Date().getMinutes()+4))

@@ -28,18 +28,18 @@ router.post('/register',(req,res,next)=>{
 			if(body.success){
 				east_api.login(name,codes,res,(success)=>{
 					res.json({success:success})
-				},0,openid)
+				},req,openid)
 			}else if(body.message=='该号码已经注册!'){
 				east_api.login(name,codes,res,(success)=>{
 					if(success)
 						res.json({success:success})
 					else
 						res.json({success:false,msg:'登录失败'})
-				},0,openid)
+				},req,openid)
 			}else{
 				res.json({success:false,msg:'绑定失败'})
 			}
-		})
+		},req)
 		return
 	}
 	auth.decrypt(token,config.pcode,(str)=>{
@@ -65,7 +65,7 @@ router.post('/register',(req,res,next)=>{
 			}else{
 				res.json({success:false,msg:'绑定失败'})
 			}
-		})
+		},req)
 	})
 })
 
@@ -153,7 +153,7 @@ router.post('/set_setting_type',(req,res,next)=>{
 	loginValid(req,res,()=>{
 		post(config.server+'/nahiisp-wish/wish',{time:new Date().getTime(),wishs:param},(body)=>{
 			res.json(body)
-		})
+		},req)
 	})
 })
 
@@ -181,7 +181,7 @@ router.post('/set_setting_type_all',(req,res,next)=>{
 		loginValid(req,res,()=>{
 			post(config.server+'/nahiisp-wish/wish',{time:new Date().getTime(),wishs:param},(body)=>{
 				res.json(body)
-			})
+			},req)
 		})
 
 	}else{
@@ -191,7 +191,7 @@ router.post('/set_setting_type_all',(req,res,next)=>{
 		loginValid(req,res,()=>{
 			del(config.server+`/nahiisp-wish/wish/${ids}/${new Date().getTime()}`,(body)=>{
 				res.json(body)
-			})
+			},req)
 		})
 	}
 })
@@ -202,7 +202,7 @@ router.post('/del_setting_type',(req,res,next)=>{
 	loginValid(req,res,()=>{
 		del(config.server+`/nahiisp-wish/wish/${id}/${new Date().getTime()}`,(body)=>{
 			res.json(body)
-		})
+		},req)
 	})
 })
 
@@ -211,7 +211,7 @@ router.get('/report_list',(req,res,next)=>{
 	//nahiisp-report/reports
 	get(config.server+'/nahiisp-report/reports',(body)=>{
 		res.json(body)
-	})
+	},req)
 })
 
 
@@ -224,7 +224,7 @@ router.post('/report',(req,res,next)=>{
 	}
 	post(config.server+'/nahiisp-report/report',param,(body)=>{
 		res.json(body)
-	})
+	},req)
 })
 
 router.get('/note_list',(req,res,next)=>{
@@ -232,7 +232,7 @@ router.get('/note_list',(req,res,next)=>{
 		get(config.server+'/intercept-notice/userIterceptNotice',(body)=>{
 			res.json(body)
 		})
-	})
+	},req)
 
 })
 
@@ -241,11 +241,11 @@ router.post('/set_notice',(req,res,next)=>{
 		if(req.query.id){
 			del(config.server+'/nahiisp-notice/'+req.query.id,(body)=>{
 				res.json(body)
-			})
+			},req)
 		}else{
 			post(config.server+'/nahiisp-notice/notice',{},(body)=>{
 				res.json(body)
-			})
+			},req)
 		}
 	})
 })
@@ -254,7 +254,7 @@ router.get('/get_notice',(req,res,next)=>{
 	loginValid(req,res,()=>{
 		get(config.server+'/nahiisp-notice/notice',(body)=>{
 			res.json(body)
-		})
+		},req)
 	})
 })
 
@@ -327,7 +327,7 @@ router.post('/send_sms',(req,res,next)=>{
 				res.json({success:1,msg:'发送成功',token:token})
 			})
 		}
-	})
+	},req)
 
 })
 
@@ -337,7 +337,7 @@ router.get('/subscribe',(req,res,next)=>{
 	loginValid(req,res,()=>{
 		get(url,(body)=>{
 			res.json(body)
-		})
+		},req)
 	})
 	
 })
@@ -360,13 +360,13 @@ router.post('/subscribe_set',(req,res,next)=>{
 					time:time
 				},(body)=>{
 					res.json(body)
-				})
+				},req)
 			})
 		}else{
 			loginValid(req,res,()=>{
 				del(config.server+`/nahiisp-subscribe/subscribe/${id}/${time}`,(body)=>{
 					res.json(body)
-				})
+				},req)
 			})
 		}
 
@@ -383,7 +383,7 @@ router.post("/tag_count",(req,res,next)=>{
 	loginValid(req,res,()=>{
 		put(url,param,(body)=>{
 			res.json(body)
-		})
+		},req)
 	})
 })
 
@@ -394,13 +394,13 @@ router.post('/logo_off',(req,res,next)=>{
 	let url=config.server+`/nahiisp-user/logoff/${data}`;
 	loginValid(req,res,()=>{
 		del(url,(body)=>{
+			req.session.user='';
 			console.log(body);
 			res.clearCookie('t');
 			res.clearCookie('a');
-			res.clearCookie('openid');
 			res.json(body)
 
-		})
+		},req)
 	})
 })
 
@@ -410,6 +410,7 @@ function loginValid(req,res,callback){
 	let t=req.cookies['t']
 	//let p=req.cookies['p']
 	let a=req.cookies['a']
+
 	if(true){
 		east_api.login(t,codes,res,(success)=>{
 			console.log('接口验证完毕，获取session:');
@@ -427,9 +428,12 @@ function loginValid(req,res,callback){
 	}
 }
 
-function del(url,callback){
-	console.log(url)
-	request.del({url:url},(err,res,body)=>{
+function del(url,callback,req){
+	let config={url};
+	if(req && req.session.user){
+		config.jar=req.session.user;
+	}
+	request.del(config,(err,res,body)=>{
 		console.log(body)
 		if (!err && res.statusCode == 200) {
 	        callback(JSON.parse(body));
@@ -463,7 +467,7 @@ function get(url,callback,req){
 }
 
 
-function post(url,req,callback,data_type,req){
+function post(url,body,callback,req,data_type){
 	let config={
 	    url: url,
 	    method: "POST",
@@ -473,12 +477,13 @@ function post(url,req,callback,data_type,req){
 	    }
 	}
 	if(data_type!='form')
-		config.body=req
+		config.body=body
 	else
-		config.form=req
+		config.form=body
 	if(req && req.session.user){
 		config.jar=req.session.user;
 	}
+	console.log(req.session,'session')
 	request(config, function(err, res, body) {
 		console.log(res.statusCode)
 		console.log(body)
@@ -492,7 +497,7 @@ function post(url,req,callback,data_type,req){
 
 }
 
-function put(url,req,callback,data_type){
+function put(url,body,callback,req,data_type){
 	let config={
 	    url: url,
 	    method: "PUT",
@@ -507,10 +512,13 @@ function put(url,req,callback,data_type){
 	    // }
 	}
 	if(data_type!='form')
-		config.body=req
+		config.body=body
 	else
-		config.form=req
-	console.log(config)
+		config.form=body
+
+	if(req && req.session.user){
+		config.jar=req.session.user;
+	}
 	request(config, function(err, res, body) {
 		console.log(res.statusCode)
 		console.log(body)

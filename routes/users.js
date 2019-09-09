@@ -8,6 +8,7 @@ let config=require('../config.json')
 router.get('/', function(req, res, next) {
 	let tel=req.cookies['t']
 	let openid=req.cookies['openid']
+	let userinfo=req.cookies['userinfo'];
 	let code=req.query.code
 	if(req.query.testbs){
 		let body={ 
@@ -50,12 +51,17 @@ router.get('/', function(req, res, next) {
 		
 	}else{
 
-
+		if(userinfo){
+			let body=JSON.parse(userinfo);
+			res.render('user_index',{title:'我的信息',tel:tel,wechat:body})
+			return;
+		}
 
 		wechat_web.get_user(openid,(body)=>{
 			let tel_times=new Date(new Date().setDate(new Date().getDate()+30))
 			res.cookie('openid',body.openid,{expires:tel_times,httpOnly:true})
 			console.log(body)
+			res.cookie('userinfo',JSON.stringify(body),{expires:tel_times,httpOnly:true});
 			res.render('user_index',{title:'我的信息',tel:tel,wechat:body})
 		})
 	}

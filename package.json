@@ -17,6 +17,8 @@
     "jssha": "^2.3.1",
     "morgan": "~1.9.0",
     "request": "~2.85.0"
+  },
+  "devDependencies": {
+    "express-session": "^1.16.2"
   }
 }
-

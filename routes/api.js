@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 let request=require('request')
 let auth = require('../server/auth')
-request=request.defaults({jar: true})
 let config=require('../config.json')
 let east_api=require('../server/east_api')
 let codes=config.key;
@@ -40,7 +39,7 @@ router.post('/register',(req,res,next)=>{
 			}else{
 				res.json({success:false,msg:'绑定失败'})
 			}
-		},'no-cookie')
+		})
 		return
 	}
 	auth.decrypt(token,config.pcode,(str)=>{
@@ -125,7 +124,7 @@ router.get('/get_setting_type',(req,res,next)=>{
 				json=body
 			}
 			res.json(json)
-		})
+		},req)
 	})
 })
 
@@ -411,9 +410,10 @@ function loginValid(req,res,callback){
 	let t=req.cookies['t']
 	//let p=req.cookies['p']
 	let a=req.cookies['a']
-	console.log('psd:'+codes)
 	if(true){
 		east_api.login(t,codes,res,(success)=>{
+			console.log('接口验证完毕，获取session:');
+			console.log(req.session.user)
 			if(success){
 				callback(true)
 			}else{
@@ -421,7 +421,7 @@ function loginValid(req,res,callback){
 				res.json({login:false});
 				//res.redirect('/register?'+)
 			}
-		})
+		},req)
 	}else{
 		callback(true)
 	}
@@ -432,7 +432,7 @@ function del(url,callback){
 	request.del({url:url},(err,res,body)=>{
 		console.log(body)
 		if (!err && res.statusCode == 200) {
-	        callback(JSON.parse(body))
+	        callback(JSON.parse(body));
 	    }else if(err){
 			callback({success:0})
 		}else{
@@ -444,9 +444,17 @@ function del(url,callback){
 }
 
 
-function get(url,callback){
-	request(url,(err,res,body)=>{
+function get(url,callback,req){
+	let config={url};
+	if(req && req.session.user){
+		config.jar=req.session.user;
+	}
+	request(config,(err,res,body)=>{
 			if (!err && res.statusCode == 200) {
+				if(typeof body=='string' &&  body.indexOf('<!DOCTYPE')>-1){
+					callback({success:0})
+					return;
+				}
 		        callback(JSON.parse(body))
 		    }else{
 		    	callback({success:0})
@@ -455,7 +463,7 @@ function get(url,callback){
 }
 
 
-function post(url,req,callback,data_type){
+function post(url,req,callback,data_type,req){
 	let config={
 	    url: url,
 	    method: "POST",
@@ -468,8 +476,8 @@ function post(url,req,callback,data_type){
 		config.body=req
 	else
 		config.form=req
-	if(data_type=='no-cookie'){
-		config.jar='';
+	if(req && req.session.user){
+		config.jar=req.session.user;
 	}
 	request(config, function(err, res, body) {
 		console.log(res.statusCode)

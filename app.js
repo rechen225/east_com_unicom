@@ -26,7 +26,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-let config=require('./config.json')
+let config=require('./config.json');
+
 app.use(bodyParser.xml({
   limit: '1MB',   // Reject payload bigger than 1 MB
   xmlParseOptions: {
@@ -36,6 +37,8 @@ app.use(bodyParser.xml({
   }
 }));
 
+
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req,res,next)=>{
@@ -43,6 +46,19 @@ app.use((req,res,next)=>{
 	res.locals._v=ver
 	next()
 })
+
+var session = require('express-session');
+
+app.use(session({
+    secret :  'eastcomhmsecret', // 对session id 相关的cookie 进行签名
+    resave : false,
+    saveUninitialized: false, // 是否保存未初始化的会话
+    cookie : {
+      secure:false,
+      maxAge : 1000 * 60 * 3, // 设置 session 的有效时间，单位毫秒
+    },
+}));
+
 
 app.use((req,res,next)=>{
   let url=req.url.toLowerCase();
@@ -73,13 +89,12 @@ app.use((req,res,next)=>{
             //console.log('登入失败')
             res.redirect(302,'/register?url='+url)
           }
-      })
+      },req)
       return
     }
   }
   next()
 })
-
 
 
 app.use('/', indexRouter);

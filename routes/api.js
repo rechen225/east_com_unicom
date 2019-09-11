@@ -231,8 +231,8 @@ router.get('/note_list',(req,res,next)=>{
 	loginValid(req,res,()=>{
 		get(config.server+'/intercept-notice/userIterceptNotice',(body)=>{
 			res.json(body)
-		})
-	},req)
+		},req)
+	})
 
 })
 
